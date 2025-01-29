@@ -1,7 +1,7 @@
-doctype html 
-html 
-    head 
-        title Song Topics 
-
-    body 
-        h1 Song topics page
+extends ../../Layouts/default.pug 
+include ../../Mixins/box-head.pug
+block main 
+    .container.my-3 
+        .row 
+            .col-12 
+                +box-head(pageTitle)
