@@ -1,0 +1,27 @@
+extends ../../layouts/default.pug 
+include ../../mixins/box-head.pug 
+
+block main 
+    .container.my-3 
+        .row  
+            .col-12 
+                +box-head(pageTitle)
+        .row 
+            each song in songs
+                .col-6.mb-3 
+                    div(class="song-item")
+                        .inner-image
+                            a(href=`/songs/detail/${song.slug}`)
+                                img(src=song.avatar, alt="song avatar") 
+                        .inner-content 
+                            .inner-title 
+                                a(href=`/songs/detail/${song.slug}`) #{song.title} 
+                            .inner-singer 
+                                i.fa-solid.fa-microphone-lines 
+                                | #{song.infoSinger.fullName}
+                            .inner-like 
+                                i.fa-solid.fa-thumbs-up
+                                | #{song.like}
+                            .inner-time 
+                                i.fa-regular.fa-clock 
+                                | Today
