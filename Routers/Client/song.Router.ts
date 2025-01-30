@@ -4,7 +4,8 @@ import * as Controller from '../../Controllers/Client/song.Controller';
 
 router.get('/:slugTopic', Controller.listSong);
 router.get('/detail/:slugSong', Controller.detail);
-router.patch('/:typeLike/:songId', Controller.like);
+router.patch('/like/:typeLike/:songId', Controller.like);
+router.patch('/favorite/:typeAdd/:songId', Controller.favorite);
 
 
 

@@ -28,35 +28,85 @@ if (buttonLike) {
     buttonLike.addEventListener('click', () => {
         const id = buttonLike.getAttribute('button-like');
         if (!buttonLike.classList.contains('liked')) {
-            //change
-            buttonLike.classList.add('liked');
-
-            const icon = buttonLike.querySelector('i');
-            icon.classList.remove('fa-thin');
-            icon.classList.add('fa-solid');
-
-            const span = buttonLike.querySelector('span');
-            const quantity = parseInt(span.textContent.split(' ')[0]);
-            span.textContent = `${quantity + 1} Liked`;
             
             //fetch
-            fetch(`/songs/like/${id}`, option)
+            fetch(`/songs/like/like/${id}`, option)
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data);
+                    if (data.code === 200) {
+                        //change
+                        buttonLike.classList.add('liked');
+
+                        const icon = buttonLike.querySelector('i');
+                        icon.classList.remove('fa-thin');
+                        icon.classList.add('fa-solid');
+
+                        const span = buttonLike.querySelector('span');
+                        const quantity = parseInt(span.textContent.split(' ')[0]);
+                        span.textContent = `${quantity + 1} Liked`;
+                    }
                 });
         } else {
-            buttonLike.classList.remove('liked');
+            fetch(`/songs/like/dislike/${id}`, option)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.code === 200) {
+                        buttonLike.classList.remove('liked');
 
-            const icon = buttonLike.querySelector('i');
-            icon.classList.remove('fa-solid');
-            icon.classList.add('fa-thin');
+                        const icon = buttonLike.querySelector('i');
+                        icon.classList.remove('fa-solid');
+                        icon.classList.add('fa-thin');
+            
+                        const span = buttonLike.querySelector('span');
+                        const quantity = parseInt(span.textContent.split(' ')[0]);
+                        span.textContent = `${quantity - 1} Like`;
+                    }
+                });
+        }
+    });
+}
 
-            const span = buttonLike.querySelector('span');
-            const quantity = parseInt(span.textContent.split(' ')[0]);
-            span.textContent = `${quantity - 1} Like`;
+//favorite
+const buttonFavorite = document.querySelector('[button-favorite]');
+if (buttonFavorite) {
+    const option = {
+        method: 'PATCH'
+    }
+    buttonFavorite.addEventListener('click', () => {
+        const id = buttonFavorite.getAttribute('button-favorite');
+        if (!buttonFavorite.classList.contains('favorited')) {
+            //fetch
+            fetch(`/songs/favorite/favorite/${id}`, option)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.code === 200) {
+                        //change
+                        buttonFavorite.classList.add('favorited');
 
-            fetch(`/songs/dislike/${id}`, option);
+                        const icon = buttonFavorite.querySelector('i');
+                        icon.classList.remove('fa-regular');
+                        icon.classList.add('fa-solid');
+
+                        const span = buttonFavorite.querySelector('span');
+                        span.textContent = `Added to favorites`;
+                    }
+                });
+        } else {
+            //fetch
+            fetch(`/songs/favorite/unfavorite/${id}`, option)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.code === 200) {
+                        buttonFavorite.classList.remove('favorited');
+
+                        const icon = buttonFavorite.querySelector('i');
+                        icon.classList.remove('fa-solid');
+                        icon.classList.add('fa-regular');
+            
+                        const span = buttonFavorite.querySelector('span');
+                        span.textContent = `Add to favorites`;
+                    }
+                });
         }
     });
 }
