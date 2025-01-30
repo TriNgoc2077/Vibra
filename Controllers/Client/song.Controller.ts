@@ -63,3 +63,34 @@ export const detail = async (req: Request, res: Response) => {
        res.redirect(req.get("Referrer") || "/");
     }
 }
+
+//[PATCH] /:typeLike/:songId
+export const like = async (req: Request, res: Response) => {
+    try {    
+        const songId: string = req.params.songId;
+        const song = await Song.findOne({ 
+            _id: songId,
+            status: "active",
+            deleted: false 
+        });
+        if (!song || !song.like) {
+            throw new Error('not found song');
+        }
+        
+        const typeLike: string = req.params.typeLike;
+        await Song.updateOne(
+            { _id: songId }, 
+            { like: (typeLike === 'like' ? song.like + 1 : song.like - 1) }    
+        )
+        res.json({
+            code: 200,
+            message: 'like successfully !'
+        });
+    } catch(error) {
+       console.log((error as Error).message); 
+       res.json({
+        code: 400,
+        message: 'like failed'
+       });
+    }
+}

@@ -83,8 +83,13 @@ body {
     transition: color 0.2s;
 }
 
-.meta-item a:hover {
+/* .meta-item a:hover {
     color: #0056b3;
+} */
+/* liked */
+.meta-item .liked {
+    background-color: #0d6efd;
+    color: #f1f1f1;
 }
 
 .song-avatar {
@@ -148,3 +153,4 @@ audio::-webkit-media-controls-panel {
         font-size: 0.9rem;
     }
 }
+

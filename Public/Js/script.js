@@ -19,3 +19,44 @@ if (aplayer) {
     });
     // ap.on('ended', function...);
 }
+//like
+const buttonLike = document.querySelector('[button-like]');
+if (buttonLike) {
+    const option = {
+        method: 'PATCH'
+    }
+    buttonLike.addEventListener('click', () => {
+        const id = buttonLike.getAttribute('button-like');
+        if (!buttonLike.classList.contains('liked')) {
+            //change
+            buttonLike.classList.add('liked');
+
+            const icon = buttonLike.querySelector('i');
+            icon.classList.remove('fa-thin');
+            icon.classList.add('fa-solid');
+
+            const span = buttonLike.querySelector('span');
+            const quantity = parseInt(span.textContent.split(' ')[0]);
+            span.textContent = `${quantity + 1} Liked`;
+            
+            //fetch
+            fetch(`/songs/like/${id}`, option)
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                });
+        } else {
+            buttonLike.classList.remove('liked');
+
+            const icon = buttonLike.querySelector('i');
+            icon.classList.remove('fa-solid');
+            icon.classList.add('fa-thin');
+
+            const span = buttonLike.querySelector('span');
+            const quantity = parseInt(span.textContent.split(' ')[0]);
+            span.textContent = `${quantity - 1} Like`;
+
+            fetch(`/songs/dislike/${id}`, option);
+        }
+    });
+}

@@ -19,7 +19,7 @@ block main
                                 i.fa-solid.fa-music.me-2
                                 a(href=`/songs/${infoTopic.slug}`).text-primary #{infoTopic.title}
                             .meta-item
-                                button.btn.btn-outline-primary.btn-sm
+                                button.btn.btn-outline-primary.btn-sm(button-like=song.id)
                                     i.fa-regular.fa-thumbs-up.me-2
                                     span #{song.like} Like
                             .meta-item
