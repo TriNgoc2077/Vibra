@@ -6,31 +6,58 @@ import Singer from '../../Models/singer.Model';
 //[GET] /topics/
 export const listSong = async (req: Request, res: Response) => {
     try {    
-    const slug = req.params.slugTopic;
-    const topic = await Topic.findOne({
-        slug: slug,
-        status: 'active',
-        deleted: false
-    });
-    if (!topic) {
-        throw new Error(`Not found topic: ${slug}`);
-    }
-    const songs = await Song.find({
-        topicId: topic.id,
-        status: "active", 
-        deleted: false
-    }).select('avatar title slug singerId like');
-    for (let song of songs) {
-        let singer = await Singer.findOne({
-            _id: song.singerId,
+        const slug = req.params.slugTopic;
+        const topic = await Topic.findOne({
+            slug: slug,
+            status: 'active',
             deleted: false
         });
-        (song as any)['infoSinger'] = singer;
+        if (!topic) {
+            throw new Error(`Not found topic: ${slug}`);
+        }
+        const songs = await Song.find({
+            topicId: topic.id,
+            status: "active", 
+            deleted: false
+        }).select('avatar title slug singerId like');
+        for (let song of songs) {
+            let singer = await Singer.findOne({
+                _id: song.singerId,
+                deleted: false
+            });
+            (song as any)['infoSinger'] = singer;
+        }
+        res.render('client/pages/Songs/list', { 
+            pageTitle: topic.title,
+            songs: songs
+        }); 
+    } catch(error) {
+       console.log((error as Error).message); 
+       res.redirect(req.get("Referrer") || "/");
     }
-    res.render('client/pages/Songs/list', { 
-        pageTitle: topic.title,
-        songs: songs
-    }); 
+}
+
+//[GET] /detail/:slugSong
+export const detail = async (req: Request, res: Response) => {
+    try {    
+        const slugSong: string = req.params.slugSong;
+        const song = await Song.findOne({ 
+            slug: slugSong,
+            status: "active",
+            deleted: false
+        });
+        if (!song) {
+            throw new Error('Not found song !');
+        }
+        const topic = await Topic.findOne({ _id: song.topicId, deleted: false }).select('title slug');
+        const singer = await Singer.findOne({ _id: song.singerId, deleted: false }).select('fullName slug');
+        
+        res.render('client/pages/Songs/detail', { 
+            pageTitle: song.title,
+            song: song,
+            infoTopic: topic,
+            infoSinger: singer
+        }); 
     } catch(error) {
        console.log((error as Error).message); 
        res.redirect(req.get("Referrer") || "/");

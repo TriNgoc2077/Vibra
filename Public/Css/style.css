@@ -1,3 +1,150 @@
 body {
     background-color: #f1f1f1;
 }   
+.shadow-hover {
+    transition: all 0.3s ease;
+}
+
+.shadow-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+.topic-overlay {
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 10px 10px 0 0;
+}
+
+.card:hover .topic-overlay {
+    opacity: 1;
+}
+
+.button-group .btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.button-group .btn:hover {
+    transform: scale(1.1);
+}
+/* Add these styles to your CSS file */
+.song-card {
+    transition: transform 0.2s ease-in-out;
+}
+
+.song-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img-wrapper {
+    overflow: hidden;
+    border-radius: 8px 8px 0 0;
+}
+
+.card-img-top {
+    transition: transform 0.3s ease;
+}
+
+.song-card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+.card-title a:hover {
+    color: #0d6efd !important;
+}
+
+/* detail song  */
+.song-detail {
+    background-color: #f8f9fa;
+}
+
+.song-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+.song-meta {
+    font-size: 0.95rem;
+}
+
+.meta-item {
+    color: #6c757d;
+}
+
+.meta-item a {
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.meta-item a:hover {
+    color: #0056b3;
+}
+
+.song-avatar {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.song-avatar:hover {
+    transform: scale(1.02);
+}
+
+.audio-player {
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+audio {
+    width: 100%;
+    height: 40px;
+}
+
+audio::-webkit-media-controls-panel {
+    background-color: #fff;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.section-content {
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.lyrics {
+    white-space: pre-wrap;
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #495057;
+}
+
+/* Animation cho các nút tương tác */
+.btn {
+    transition: all 0.2s;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .song-title {
+        font-size: 1.5rem;
+    }
+    
+    .song-meta {
+        font-size: 0.9rem;
+    }
+}

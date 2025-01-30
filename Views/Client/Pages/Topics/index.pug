@@ -43,39 +43,6 @@ block main
                             p.card-text.text-muted #{topic.description}
                             a(href=`/songs/${topic.slug}`, class="btn btn-primary btn-detail") Detail
 
-    style.
-        .shadow-hover {
-            transition: all 0.3s ease;
-        }
-        
-        .shadow-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
-        }
-        
-        .topic-overlay {
-            background: rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            border-radius: 10px 10px 0 0;
-        }
-        
-        .card:hover .topic-overlay {
-            opacity: 1;
-        }
-        
-        .button-group .btn {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s ease;
-        }
-        
-        .button-group .btn:hover {
-            transform: scale(1.1);
-        }
 
     script.
         // Initialize tooltips
