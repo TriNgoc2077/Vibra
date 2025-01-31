@@ -110,3 +110,22 @@ if (buttonFavorite) {
         }
     });
 }
+
+//login
+const loginForm = document.querySelector('.login-form');
+if (loginForm) {
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target); //e.target is form, because arrow func cause 'e' to point to window
+        const data = Object.fromEntries(formData);
+        try {
+            fetch('/user/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+        } catch(error) {
+            console.log(error);
+        }
+    });
+}

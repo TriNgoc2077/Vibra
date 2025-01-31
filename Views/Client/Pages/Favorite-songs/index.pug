@@ -1,0 +1,13 @@
+extends ../../Layouts/default.pug 
+include ../../Mixins/box-head.pug 
+
+block main 
+    .container.my-3 
+        .row 
+            .col-12 
+                +box-head(pageTitle)
+        .row 
+            .col6.mb-3 
+                .song-item 
+                    .inner-image 
+                        a(href=`/song/detail/:slugSong`) 

@@ -12,7 +12,8 @@ app.set('views', './views');
 app.set('view engine', 'pug');
 
 app.use(express.static(`${__dirname}/Public`));
-
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 //Client routers
 clientRouters(app);
 
