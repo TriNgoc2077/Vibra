@@ -11,6 +11,9 @@ html
         link(rel="icon", href="/Images/favicon.webp", type="image/webp")
 
     body 
+        include ../mixins/alert.pug 
+        +alert-success(3000)
+        +alert-error(3000)
         include ../partials/header.pug
 
         block main

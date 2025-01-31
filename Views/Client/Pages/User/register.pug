@@ -5,38 +5,51 @@ block main
         .background-overlay
         .login-box.animate-fadeIn
             .login-header.text-center.mb-4
-                h2.text-white.animate-slideDown Welcome Back
-                p.text-muted.animate-slideDown Enjoy your favorite music
+                h2.text-white.animate-slideDown Create Account
+                p.text-muted.animate-slideDown Start your musical journey today
 
-            form.login-form
+            form.register-form(action="/user/verify" method="POST")
+                .form-group.mb-3.animate-slideRight
+                    .input-group
+                        span.input-group-text.bg-transparent.border-end-0
+                            i.fas.fa-user.text-primary
+                        input.form-control.border-start-0(type="text" placeholder="Full Name" name="fullName" required)
+
                 .form-group.mb-3.animate-slideRight
                     .input-group
                         span.input-group-text.bg-transparent.border-end-0
                             i.fas.fa-envelope.text-primary
-                        input.form-control.border-start-0(type="email" placeholder="Email address" required name="email")
+                        input.form-control.border-start-0(type="email" placeholder="Email address" name="email" required)
+
+                .form-group.mb-3.animate-slideRight
+                    .input-group
+                        span.input-group-text.bg-transparent.border-end-0
+                            i.fas.fa-lock.text-primary
+                        input.form-control.border-start-0(type="password" placeholder="Password" name="password" required)
 
                 .form-group.mb-4.animate-slideRight
                     .input-group
                         span.input-group-text.bg-transparent.border-end-0
                             i.fas.fa-lock.text-primary
-                        input.form-control.border-start-0(type="password" placeholder="Password" required name="password")
+                        input.form-control.border-start-0(type="password" placeholder="Confirm Password" name="confirmPassword" required)
 
-                .form-group.mb-3.d-flex.justify-content-between.align-items-center.animate-fadeIn
+                .form-group.mb-3.animate-fadeIn
                     .form-check
-                        input.form-check-input#remember(type="checkbox" name="checkbox" checked="true")
-                        label.form-check-label.text-muted(for="remember" ) Remember me
-                    a.text-primary.text-decoration-none.hover-effect(href="#") Forgot Password?
+                        input.form-check-input#terms(type="checkbox" required checked="true")
+                        label.form-check-label.text-muted(for="terms") 
+                            | I agree to the 
+                            a.text-primary.text-decoration-none.hover-effect(href="#") Terms & Conditions
 
                 button.btn.btn-primary.w-100.mb-3.animate-pulse(type="submit") 
-                    span Sign In
+                    span Create Account
                     i.fas.fa-arrow-right.ms-2
 
                 .text-center.text-muted.animate-fadeIn
-                    span Don't have an account? 
-                    a.text-primary.text-decoration-none.hover-effect(href="#") Sign Up
+                    span Already have an account? 
+                    a.text-primary.text-decoration-none.hover-effect(href="#") Sign In
 
                 .social-login.text-center.mt-4.animate-slideUp
-                    p.text-muted.mb-3 Or continue with
+                    p.text-muted.mb-3 Or register with
                     .social-buttons
                         button.btn.btn-outline-light.me-2.hover-scale
                             i.fab.fa-google
@@ -46,6 +59,19 @@ block main
                             i.fab.fa-apple
     link(rel="stylesheet", href="/Css/login.css")
     style.
+        .form-check a:hover {
+            text-decoration: underline !important;
+        }
+
+        .form-group.animate-slideRight {
+            animation-delay: calc(var(--i, 0) * 0.1s);
+        }
+
+        .form-control:not(:placeholder-shown) {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -83,3 +109,4 @@ block main
             50% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
             100% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
         }
+
