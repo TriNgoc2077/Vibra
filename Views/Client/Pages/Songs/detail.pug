@@ -52,3 +52,73 @@ block main
                                 | Lyrics
                             .section-content.bg-light.rounded-3.p-3
                                 pre.lyrics.mb-0 !{song.lyrics}
+    //- Other Songs Section
+    .other-songs.py-5
+        .container
+            h2.mb-4 Other Songs
+            .row
+                each song in songs.slice(0, 8)
+                    .col-sm-6.col-lg-3.mb-4
+                        .card.h-100.border-0.shadow-hover
+                            .card-img-wrapper.position-relative.overflow-hidden
+                                a(href=`/songs/detail/${song.slug}`)
+                                    img.card-img-top(
+                                        src=song.avatar
+                                        alt=song.title
+                                        style="height: 270px; object-fit: cover; transition: transform 0.3s ease;"
+                                    )
+                            .card-body
+                                h5.card-title.mb-3
+                                    a.text-decoration-none.text-light(href=`/songs/detail/${song.slug}`) #{song.title}
+                                
+                                .d-flex.align-items-center.mb-2
+                                    i.fa-solid.fa-microphone-lines.me-2.text-primary
+                                    span.text-muted #{infoSinger.fullName}
+                                
+                                .d-flex.justify-content-between.align-items-center
+                                    .d-flex.align-items-center
+                                        i.fa-solid.fa-thumbs-up.me-2.text-success
+                                        span.text-muted #{song.like}
+                                    .d-flex.align-items-center
+                                        i.fa-regular.fa-clock.me-2.text-info
+                                        span.text-muted Today
+
+    //- Other Topics Section
+    .other-topics.py-5
+        .container
+            h2.mb-4 Related Topics
+            .row
+                each topic in topics.slice(0, 4)
+                    .col-md-3.mb-4
+                        .card.h-100.border-0.shadow-hover
+                            .card-img-container.position-relative
+                                .card-img-top.overflow-hidden(style="height: 200px; border-radius: 10px 10px 0 0;")
+                                    img(src=topic.avatar, alt=topic.title, style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;")
+                                
+                                .topic-overlay.position-absolute.top-0.start-0.w-100.h-100.d-flex.align-items-center.justify-content-center.bg-dark.bg-opacity-50.opacity-0
+                                    .button-group.d-flex.gap-2
+                                        button.btn.btn-light.rounded-circle.p-2(title="Add to favorites")
+                                            i.fas.fa-heart
+                                        button.btn.btn-light.rounded-circle.p-2(title="Play")
+                                            i.fas.fa-play
+                                        .dropdown
+                                            button.btn.btn-light.rounded-circle.p-2(data-bs-toggle="dropdown" title="More options")
+                                                i.fas.fa-ellipsis-h
+                                            ul.dropdown-menu
+                                                li
+                                                    a.dropdown-item(href="#")
+                                                        i.fas.fa-circle-info.me-2
+                                                        | Detail
+                                                li
+                                                    a.dropdown-item(href="#")
+                                                        i.fas.fa-list.me-2
+                                                        | Add to playlist
+                                                li
+                                                    a.dropdown-item.copy-link(href="#" data-link=`/songs/${topic.slug}`)
+                                                        i.fas.fa-link.me-2
+                                                        | Copy link
+
+                            .card-body.text-center
+                                h5.card-title.fw-bold.text-light #{topic.title}
+                                p.card-text.text-muted #{topic.description}
+                                a(href=`/songs/${topic.slug}`, class="btn btn-primary btn-detail") Detail

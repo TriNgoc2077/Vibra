@@ -50,19 +50,28 @@ export const detail = async (req: Request, res: Response) => {
         if (!song) {
             throw new Error('Not found song !');
         }
-        const topic = await Topic.findOne({ _id: song.topicId, deleted: false }).select('title slug');
-        const singer = await Singer.findOne({ _id: song.singerId, deleted: false }).select('fullName slug');
-        const user = await User.findOne({ userToken: req.cookies.userToken });
+        const topicOfSong = await Topic.findOne({ _id: song.topicId, deleted: false }).select('title slug');
+        const singerOfSong = await Singer.findOne({ _id: song.singerId, deleted: false }).select('id fullName slug');
+        const user = await User.findOne({ userToken: req.cookies.userToken, status: 'active', deleted: false }).select('likeSongs favoriteSongs');
+
         const liked: boolean = (user?.likeSongs.find(id => id === song.id) ? true : false);
         const favorited: boolean = (user?.favoriteSongs.find(id => id === song.id) ? true : false);
-
+        const songs = await Song.find({
+            singerId: singerOfSong?.id,
+            _id: { $ne: song._id },
+            status: 'active',
+            deleted: false
+        }).limit(8);
+        const topics = await Topic.find({ deleted: false }).limit(4);
         res.render('client/pages/Songs/detail', { 
             pageTitle: song.title,
             song: song,
-            infoTopic: topic,
-            infoSinger: singer,
+            infoTopic: topicOfSong,
+            infoSinger: singerOfSong,
             liked: liked,
-            favorited: favorited
+            favorited: favorited,
+            songs: songs,
+            topics: topics
         }); 
     } catch(error) {
        console.log((error as Error).message); 

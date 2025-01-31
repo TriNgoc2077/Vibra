@@ -31,14 +31,6 @@ export const sendMail = function message(merchantEmail: string, msgTxt: string, 
                 </head>
                 <body style="margin: 0; padding: 0; font-family: 'Google Sans',Roboto,Arial,sans-serif; color: #202124; background-color: #f5f5f5;">
                     <div style="width: 100%; max-width: 600px; margin: 0 auto; padding: 24px; box-sizing: border-box;">
-                        <!-- Logo with subtle animation -->
-                        <div style="text-align: center; margin-bottom: 24px; transition: transform 0.3s ease;">
-                            <img src="https://res.cloudinary.com/daq721xar/image/upload/v1735537773/ks8bntw4uiw3sv3sfbk0.webp" 
-                                alt="Your Company Logo" 
-                                style="height: 50px; transition: transform 0.3s ease;"
-                                onmouseover="this.style.transform='scale(1.1)'"
-                                onmouseout="this.style.transform='scale(1)'">
-                        </div>
                         
                         <!-- Main Content with enhanced design -->
                         <div style="background: #ffffff; border: 1px solid #dadce0; border-radius: 12px; padding: 40px 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
