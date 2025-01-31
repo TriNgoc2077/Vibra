@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import Topic from '../../Models/topic.Model';
 import Song from '../../Models/song.Model';
 import Singer from '../../Models/singer.Model';
+import User from '../../Models/user.Model';
 
 //[GET] /topics/
 export const listSong = async (req: Request, res: Response) => {
@@ -51,11 +52,17 @@ export const detail = async (req: Request, res: Response) => {
         }
         const topic = await Topic.findOne({ _id: song.topicId, deleted: false }).select('title slug');
         const singer = await Singer.findOne({ _id: song.singerId, deleted: false }).select('fullName slug');
+        const user = await User.findOne({ userToken: req.cookies.userToken });
+        const liked: boolean = (user?.likeSongs.find(id => id === song.id) ? true : false);
+        const favorited: boolean = (user?.favoriteSongs.find(id => id === song.id) ? true : false);
+
         res.render('client/pages/Songs/detail', { 
             pageTitle: song.title,
             song: song,
             infoTopic: topic,
-            infoSinger: singer
+            infoSinger: singer,
+            liked: liked,
+            favorited: favorited
         }); 
     } catch(error) {
        console.log((error as Error).message); 
@@ -63,86 +70,92 @@ export const detail = async (req: Request, res: Response) => {
     }
 }
 
-// //[PATCH] /like/:typeLike/:songId
-// export const like = async (req: Request, res: Response) => {
-//     try {    
-//         const songId: string = req.params.songId;
-//         const song = await Song.findOne({ 
-//             _id: songId,
-//             status: "active",
-//             deleted: false 
-//         });
-//         if (!song || !song.like) {
-//             throw new Error('not found song');
-//         }
-        
-//         const typeLike: string = req.params.typeLike;
-//         await Song.updateOne(
-//             { _id: songId }, 
-//             { like: (typeLike === 'like' ? song.like + 1 : song.like - 1) }    
-//         )
-//         res.json({
-//             code: 200,
-//             message: 'like successfully !'
-//         });
-//     } catch(error) {
-//        console.log((error as Error).message); 
-//        res.json({
-//         code: 400,
-//         message: 'like failed'
-//        });
-//     }
-// }
+//[PATCH] /like/:typeLike/:songId
+export const like = async (req: Request, res: Response) => {
+    try {    
+        console.log(req.cookies);
+        const songId: string = req.params.songId;
+        const song = await Song.findOne({ 
+            _id: songId,
+            status: "active",
+            deleted: false 
+        });
+        if (!song || !song.like) {
+            throw new Error('not found song');
+        }
+        //update like song
+        const typeLike: string = req.params.typeLike;
+        await Song.updateOne(
+            { _id: songId }, 
+            { like: (typeLike === 'like' ? song.like + 1 : song.like - 1) }    
+        )
+        //save like to user
+        const user = await User.findOne({
+            userToken: req.cookies.userToken
+        });
+        if (!user) {
+            throw new Error('Not found user !');
+        }
+        if (typeLike === 'like') {
+            await User.updateOne(
+                { userToken: req.cookies.userToken},
+                { $push: { likeSongs: songId }}
+            );
+        } else {
+            await User.updateOne(
+                { userToken: req.cookies.userToken},
+                { $pull: { likeSongs: songId }}
+            );
+        }
+        res.json({
+            code: 200,
+            message: 'like successfully !'
+        });
+    } catch(error) {
+       console.log((error as Error).message); 
+       res.json({
+        code: 400,
+        message: 'like failed'
+       });
+       res.redirect(req.get("Referrer") || "/");
+    }
+}
 
-// //[PATCH] /favorite/:typeLike/:songId
-// export const favorite = async (req: Request, res: Response) => {
-//     try {    
-//         const songId: string = req.params.songId;
-//         const song = await Song.findOne({ 
-//             _id: songId,
-//             status: "active",
-//             deleted: false 
-//         });
-//         if (!song || !song.like) {
-//             throw new Error('not found song');
-//         }
-//         const typeAdd: string = req.params.typeAdd;
-//         if (typeAdd === 'favorite') {
-//             const existSong = await FavoriteSong.findOne({
-//                 songs: { $elemMatch: { $eq: songId } },
-//                 deleted: false
-//             });
-//             if (existSong) {
-//                 throw new Error('this song is in favorite list');
-//             } else {
-//                 await FavoriteSong.updateOne(
-//                     {},
-//                     { $push: { songs: songId }}
-//                 );
-//             }
-//         } else if (typeAdd === 'unfavorite') {
-//             const existSong = await FavoriteSong.findOne({
-//                 songs: { $elemMatch: { $eq: songId } },
-//                 deleted: false
-//             });
-//             if (!existSong) {
-//                 throw new Error('this song is not in favorite list');
-//             } else {
-//                 await FavoriteSong.updateOne(
-//                     {},
-//                     { $pull: { songs: songId }}
-//                 );
-//             }
-//         }
-//         res.json({
-//             code: 200,
-//             message: 'remove successfully !'
-//         });
-//     } catch(error) {
-//        console.log((error as Error).message); 
-//        res.json({
-//         code: 400,
-//         message: 'remove failed'
-//        });
-//     }
-// }
+//[PATCH] /favorite/:typeLike/:songId
+export const favorite = async (req: Request, res: Response) => {
+    try {    
+        const songId: string = req.params.songId;
+        const song = await Song.findOne({ 
+            _id: songId,
+            status: "active",
+            deleted: false 
+        });
+        if (!song || !song.like) {
+            throw new Error('not found song');
+        }
+        //add to favorite list
+        const typeAdd: string = req.params.typeAdd;
+        if (typeAdd === 'favorite') {
+            await User.updateOne(
+                { userToken: req.cookies.userToken },
+                { $push: { favoriteSongs: songId } }
+            );
+        } else if (typeAdd === 'unfavorite') {
+            await User.updateOne(
+                { userToken: req.cookies.userToken },
+                { $pull: { favoriteSongs: songId } }
+            );
+        }
+        res.json({
+            code: 200,
+            message: 'remove successfully !'
+        });
+    } catch(error) {
+       console.log((error as Error).message); 
+       res.json({
+        code: 400,
+        message: 'remove failed'
+       });
+       res.redirect(req.get("Referrer") || "/");
+    }
+}

@@ -4,6 +4,8 @@ import * as database from './Config/database';
 import clientRouters from './Routers/Client/index.Router';
 import session from 'express-session';
 import flash from 'express-flash';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
 dotenv.config();
 database.connect();
 
@@ -12,7 +14,8 @@ const port: number | string = process.env.PORT || 3001;
 
 app.set('views', './views');
 app.set('view engine', 'pug');
-
+app.use(cors({credentials: true}));
+app.use(cookieParser());
 app.use(express.static(`${__dirname}/Public`));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

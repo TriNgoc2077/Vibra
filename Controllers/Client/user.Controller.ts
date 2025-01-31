@@ -78,8 +78,8 @@ export const verify = async (req: Request, res: Response) => {
 //[POST] /user/registerpost
 export const registerPost = async (req: Request, res: Response) => {
 	try {
-        const data: { fullName?: string; email?: string; password?: string; confirmPassword?: string } = req.session.userInfo || {};
-        const email = data.email;
+        // const data: { fullName?: string; email?: string; password?: string; confirmPassword?: string } = req.session.userInfo || {};
+        const email = req.body.email;
 		let otp = "";
 		for (let i of [1, 2, 3, 4, 5, 6]) {
 			const index = `otp${i}`;
@@ -100,8 +100,9 @@ export const registerPost = async (req: Request, res: Response) => {
 			const user = new User(req.body);
 			await user.save();
             //cookie
-			res.cookie("userToken", user.userToken, {
+			res.cookie("userToken", req.body.userToken, {
                 httpOnly: true,       // Do not allow JavaScript to access cookies
+                path: '/', 
                 secure: process.env.NODE_ENV === 'production', // Only send cookies over HTTPS in production environments
                 sameSite: 'strict',   // Prevent cookies from being sent in cross-site requests
                 maxAge: 24 * 60 * 60 * 1000, 

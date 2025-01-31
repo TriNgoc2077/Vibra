@@ -19,13 +19,13 @@ block main
                                 i.fa-solid.fa-music.me-2
                                 a(href=`/songs/${infoTopic.slug}`).text-primary #{infoTopic.title}
                             .meta-item
-                                button.btn.btn-outline-primary.btn-sm(button-like=song.id)
-                                    i.fa-regular.fa-thumbs-up.me-2
-                                    span #{song.like} Like
+                                button.btn.btn-outline-primary.btn-sm(button-like=song.id class=(liked ? "liked" : ""))
+                                    i(class=(liked ? "fa-solid" : "fa-regular")).fa-thumbs-up.me-2
+                                    span #{song.like} #{liked ? "Liked" : "Like"}
                             .meta-item
-                                button.btn.btn-outline-danger.btn-sm(button-favorite=song.id)
-                                    i.fa-regular.fa-heart.me-2
-                                    span Add to favorites
+                                button.btn.btn-outline-danger.btn-sm(button-favorite=song.id class=(favorited ? "favorited" : ""))
+                                    i(class=(favorited ? "fa-solid" : "fa-regular")).fa-heart.me-2
+                                    span #{favorited ? "Added to favorites" : "Add to favorites"}
 
                     .song-player.mb-4
                         .row.align-items-center

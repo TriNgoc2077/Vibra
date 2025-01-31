@@ -23,7 +23,8 @@ if (aplayer) {
 const buttonLike = document.querySelector('[button-like]');
 if (buttonLike) {
     const option = {
-        method: 'PATCH'
+        method: 'PATCH',
+        credentials: 'include',
     }
     buttonLike.addEventListener('click', () => {
         const id = buttonLike.getAttribute('button-like');
@@ -38,7 +39,7 @@ if (buttonLike) {
                         buttonLike.classList.add('liked');
 
                         const icon = buttonLike.querySelector('i');
-                        icon.classList.remove('fa-thin');
+                        icon.classList.remove('fa-regular');
                         icon.classList.add('fa-solid');
 
                         const span = buttonLike.querySelector('span');
@@ -55,7 +56,7 @@ if (buttonLike) {
 
                         const icon = buttonLike.querySelector('i');
                         icon.classList.remove('fa-solid');
-                        icon.classList.add('fa-thin');
+                        icon.classList.add('fa-regular');
             
                         const span = buttonLike.querySelector('span');
                         const quantity = parseInt(span.textContent.split(' ')[0]);
