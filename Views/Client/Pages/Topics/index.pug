@@ -59,7 +59,7 @@ block main
                 navigator.clipboard.writeText(window.location.origin + link)
                     .then(() => {
                         // Optional: Show a toast or notification that link was copied
-                        alert('Link copied to clipboard!');
+                        showToast('Link copied to clipboard!');
                     });
             });
         });

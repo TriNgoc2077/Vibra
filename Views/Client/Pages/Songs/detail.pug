@@ -69,7 +69,7 @@ block main
                                     )
                             .card-body
                                 h5.card-title.mb-3
-                                    a.text-decoration-none.text-light(href=`/songs/detail/${song.slug}`) #{song.title}
+                                    a.text-decoration-none.text-dark(href=`/songs/detail/${song.slug}`) #{song.title}
                                 
                                 .d-flex.align-items-center.mb-2
                                     i.fa-solid.fa-microphone-lines.me-2.text-primary
@@ -89,13 +89,14 @@ block main
             h2.mb-4 Related Topics
             .row
                 each topic in topics.slice(0, 4)
-                    .col-md-3.mb-4
-                        .card.h-100.border-0.shadow-hover
+                    .col-12.col-md-6.col-lg-4.col-xl-3.mb-4   
+                        .card.h-100.border-0.shadow-hover.position-relative
                             .card-img-container.position-relative
                                 .card-img-top.overflow-hidden(style="height: 200px; border-radius: 10px 10px 0 0;")
-                                    img(src=topic.avatar, alt=topic.title, style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;")
+                                    img(src=topic.avatar, alt=topic.title, style="width: 100%; height: 100%; object-fit: cover;")
                                 
-                                .topic-overlay.position-absolute.top-0.start-0.w-100.h-100.d-flex.align-items-center.justify-content-center.bg-dark.bg-opacity-50.opacity-0
+                                //- Overlay with buttons (hidden by default)
+                                .topic-overlay.position-absolute.top-0.start-0.w-100.h-100.d-flex.align-items-center.justify-content-center
                                     .button-group.d-flex.gap-2
                                         button.btn.btn-light.rounded-circle.p-2(title="Add to favorites")
                                             i.fas.fa-heart
@@ -114,11 +115,31 @@ block main
                                                         i.fas.fa-list.me-2
                                                         | Add to playlist
                                                 li
-                                                    a.dropdown-item.copy-link(href="#" data-link=`/songs/${topic.slug}`)
+                                                    a.dropdown-item.copy-link(data-link=`/songs/${topic.slug}`)
                                                         i.fas.fa-link.me-2
                                                         | Copy link
 
                             .card-body.text-center
-                                h5.card-title.fw-bold.text-light #{topic.title}
+                                h5.card-title.fw-bold #{topic.title}
                                 p.card-text.text-muted #{topic.description}
                                 a(href=`/songs/${topic.slug}`, class="btn btn-primary btn-detail") Detail
+    script.
+
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+
+        // Copy link functionality
+        document.querySelectorAll('.copy-link').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const link = button.getAttribute('data-link');
+                navigator.clipboard.writeText(window.location.origin + link)
+                // Optional: Show a toast or notification that link was copied
+                .then(() => {
+                    showToast('Link copied to clipboard!');
+                })
+            });
+        });

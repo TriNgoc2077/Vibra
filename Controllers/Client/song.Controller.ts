@@ -20,14 +20,7 @@ export const listSong = async (req: Request, res: Response) => {
             topicId: topic.id,
             status: "active", 
             deleted: false
-        }).select('avatar title slug singerId like');
-        for (let song of songs) {
-            let singer = await Singer.findOne({
-                _id: song.singerId,
-                deleted: false
-            });
-            (song as any)['infoSinger'] = singer;
-        }
+        }).select('avatar title slug singer like');
         res.render('client/pages/Songs/list', { 
             pageTitle: topic.title,
             songs: songs
@@ -51,13 +44,13 @@ export const detail = async (req: Request, res: Response) => {
             throw new Error('Not found song !');
         }
         const topicOfSong = await Topic.findOne({ _id: song.topicId, deleted: false }).select('title slug');
-        const singerOfSong = await Singer.findOne({ _id: song.singerId, deleted: false }).select('id fullName slug');
+        const singerOfSong = await Singer.findOne({ _id: song.singer?.singerId, deleted: false }).select('id fullName slug');
         const user = await User.findOne({ userToken: req.cookies.userToken, status: 'active', deleted: false }).select('likeSongs favoriteSongs');
 
         const liked: boolean = (user?.likeSongs.find(id => id === song.id) ? true : false);
         const favorited: boolean = (user?.favoriteSongs.find(id => id === song.id) ? true : false);
         const songs = await Song.find({
-            singerId: singerOfSong?.id,
+            'singer.singerId': song.singer?.singerId,
             _id: { $ne: song._id },
             status: 'active',
             deleted: false

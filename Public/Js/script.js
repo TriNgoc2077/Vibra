@@ -19,6 +19,17 @@ if (aplayer) {
     });
     // ap.on('ended', function...);
 }
+//toast
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.textContent = message;
+    toast.className = 'toast-message';
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}
 //like
 const buttonLike = document.querySelector('[button-like]');
 if (buttonLike) {

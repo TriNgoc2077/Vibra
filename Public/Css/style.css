@@ -159,3 +159,13 @@ audio::-webkit-media-controls-panel {
     }
 }
 
+.toast-message {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #333;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    z-index: 9999;
+}

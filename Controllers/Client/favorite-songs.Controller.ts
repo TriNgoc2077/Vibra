@@ -16,8 +16,8 @@ export const index = async (req: Request, res: Response) => {
             }
         }
         res.render('client/Pages/Favorite-songs/index', {
-        pageTitle: 'Favorite Song',
-        songs: songs
+            pageTitle: 'Favorite Song',
+            songs: songs
         });
     } catch(error) {
         console.log((error as Error).message); 
