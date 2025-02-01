@@ -79,48 +79,52 @@ if (buttonLike) {
 }
 
 //favorite
-const buttonFavorite = document.querySelector('[button-favorite]');
+const buttonFavorite = document.querySelectorAll('[button-favorite]');
+console.log(buttonFavorite);
 if (buttonFavorite) {
     const option = {
         method: 'PATCH'
     }
-    buttonFavorite.addEventListener('click', () => {
-        const id = buttonFavorite.getAttribute('button-favorite');
-        if (!buttonFavorite.classList.contains('favorited')) {
-            //fetch
-            fetch(`/songs/favorite/favorite/${id}`, option)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.code === 200) {
-                        //change
-                        buttonFavorite.classList.add('favorited');
-
-                        const icon = buttonFavorite.querySelector('i');
-                        icon.classList.remove('fa-regular');
-                        icon.classList.add('fa-solid');
-
-                        const span = buttonFavorite.querySelector('span');
-                        span.textContent = `Added to favorites`;
-                    }
-                });
-        } else {
-            //fetch
-            fetch(`/songs/favorite/unfavorite/${id}`, option)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.code === 200) {
-                        buttonFavorite.classList.remove('favorited');
-
-                        const icon = buttonFavorite.querySelector('i');
-                        icon.classList.remove('fa-solid');
-                        icon.classList.add('fa-regular');
-            
-                        const span = buttonFavorite.querySelector('span');
-                        span.textContent = `Add to favorites`;
-                    }
-                });
-        }
-    });
+    for (let button of buttonFavorite) {
+        button.addEventListener('click', () => {
+            console.log("click");
+            const id = button.getAttribute('button-favorite');
+            if (!button.classList.contains('favorited')) {
+                //fetch
+                fetch(`/songs/favorite/favorite/${id}`, option)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.code === 200) {
+                            //change
+                            button.classList.add('favorited');
+    
+                            const icon = button.querySelector('i');
+                            icon.classList.remove('fa-regular');
+                            icon.classList.add('fa-solid');
+    
+                            const span = button.querySelector('span');
+                            span.textContent = `Added to favorites`;
+                        }
+                    });
+            } else {
+                //fetch
+                fetch(`/songs/favorite/unfavorite/${id}`, option)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.code === 200) {
+                            button.classList.remove('favorited');
+    
+                            const icon = button.querySelector('i');
+                            icon.classList.remove('fa-solid');
+                            icon.classList.add('fa-regular');
+                
+                            const span = button.querySelector('span');
+                            span.textContent = `Add to favorites`;
+                        }
+                    });
+            }
+        });
+    }
 }
 
 //login

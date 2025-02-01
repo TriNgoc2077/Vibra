@@ -20,9 +20,9 @@ block main
                             .singer
                                 i.fa-solid.fa-microphone-lines
                                 a.text-decoration-none.singer(href=`/singer/${song.infoSinger.slug}`)= song.infoSinger.fullName
-                            .favorite
-                                i.fa-regular.fa-heart
-                                span Favorite
+                            .favorite(button-favorite=song._id, class=(song.favorited ? "favorited" : ""))
+                                i(class=(song.favorited ? "fa-solid" : "fa-regular")).fa-heart
+                                span #{song.favorited ? "Added to favorites" : "Add to favorites"}
                             .time
                                 i.fa-regular.fa-clock
                                 span 20/10/2023

@@ -19,9 +19,9 @@ block main
                             .singer
                                 i.fa-solid.fa-microphone-lines
                                 span= song.infoSinger.fullName
-                            .favorite
-                                i.fa-regular.fa-heart
-                                span Favorite
+                            .favorite(button-favorite=song._id, class="favorited")
+                                i.fa-solid.fa-heart
+                                span Added to favorites
                             .time
                                 i.fa-regular.fa-clock
                                 span 20/10/2023

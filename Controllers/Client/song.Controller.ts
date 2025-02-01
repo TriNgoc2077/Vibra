@@ -8,11 +8,13 @@ interface Singer {
     slug: string;
 }
 interface Song {
+    id: string;
     title: string;
     avatar: string; 
     singerId: string;
     like: number;
     slug: string;
+    favorited: boolean;
     infoSinger?: Singer | null;
 }
 //[GET] /topics/
@@ -27,11 +29,15 @@ export const listSong = async (req: Request, res: Response) => {
         if (!topic) {
             throw new Error(`Not found topic: ${slug}`);
         }
+
         const songs = await Song.find({
             topicId: topic.id,
             status: "active", 
             deleted: false
-        }).select('title avatar singerId like slug') as Song[];
+        }).select('id title avatar singerId like slug') as Song[];
+        const user = await User.findOne({ userToken: req.cookies.userToken, deleted: false }).select("favoriteSongs");
+        const favoriteSongs = user?.favoriteSongs || [];
+
         const songsWithSingers = await Promise.all(
             songs.map(async (song) => {
                 const infoSinger = await Singer.findOne({ 
@@ -39,6 +45,9 @@ export const listSong = async (req: Request, res: Response) => {
                     deleted: false 
                 }).select("fullName slug").lean() as Singer;
                 song.infoSinger = infoSinger;
+                //user favorited ?
+                song.favorited = (favoriteSongs.includes(song.id));
+
                 return song;
             })
         );
@@ -66,17 +75,25 @@ export const detail = async (req: Request, res: Response) => {
         }
         const topicOfSong = await Topic.findOne({ _id: song.topicId, deleted: false }).select('title slug');
         const singerOfSong = await Singer.findOne({ _id: song.singerId, deleted: false }).select('id fullName slug');
+        
         const user = await User.findOne({ userToken: req.cookies.userToken, status: 'active', deleted: false }).select('likeSongs favoriteSongs');
-
-        const liked: boolean = (user?.likeSongs.find(id => id === song.id) ? true : false);
-        const favorited: boolean = (user?.favoriteSongs.find(id => id === song.id) ? true : false);
+        const favoriteSongs = user?.favoriteSongs || [];
+        const likeSongs = user?.likeSongs || [];
+        const liked: boolean = (likeSongs.includes(song.id));
+        const favorited: boolean = (favoriteSongs.includes(song.id));
+        
         const songs = await Song.find({
             singerId: song.singerId,
-            _id: { $ne: song._id },
+            _id: { $ne: song.id },
             status: 'active',
             deleted: false
-        }).limit(8);
+        }).limit(8).select('id title avatar singerId like slug') as Song[];
+        for (const song of songs) {
+            song.favorited = (favoriteSongs.includes(song.id));
+        }
+
         const topics = await Topic.find({ deleted: false }).limit(4);
+        
         res.render('client/pages/Songs/detail', { 
             pageTitle: song.title,
             song: song,
