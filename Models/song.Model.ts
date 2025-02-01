@@ -5,10 +5,7 @@ const songSchema = new mongoose.Schema(
         title: String,
         avatar: String,
         description: String,
-        singer: {
-            fullName: String,
-            singerId: String
-        },
+        singerId: String,
         topicId: String,
         like: Number,
         lyrics: String,

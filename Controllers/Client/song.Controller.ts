@@ -3,7 +3,18 @@ import Topic from '../../Models/topic.Model';
 import Song from '../../Models/song.Model';
 import Singer from '../../Models/singer.Model';
 import User from '../../Models/user.Model';
-
+interface Singer {
+    fullName: string;
+    slug: string;
+}
+interface Song {
+    title: string;
+    avatar: string; 
+    singerId: string;
+    like: number;
+    slug: string;
+    infoSinger?: Singer | null;
+}
 //[GET] /topics/
 export const listSong = async (req: Request, res: Response) => {
     try {    
@@ -20,10 +31,20 @@ export const listSong = async (req: Request, res: Response) => {
             topicId: topic.id,
             status: "active", 
             deleted: false
-        }).select('avatar title slug singer like');
+        }).select('title avatar singerId like slug') as Song[];
+        const songsWithSingers = await Promise.all(
+            songs.map(async (song) => {
+                const infoSinger = await Singer.findOne({ 
+                    _id: song.singerId, 
+                    deleted: false 
+                }).select("fullName slug").lean() as Singer;
+                song.infoSinger = infoSinger;
+                return song;
+            })
+        );
         res.render('client/pages/Songs/list', { 
             pageTitle: topic.title,
-            songs: songs
+            songs: songsWithSingers
         }); 
     } catch(error) {
        console.log((error as Error).message); 
@@ -44,13 +65,13 @@ export const detail = async (req: Request, res: Response) => {
             throw new Error('Not found song !');
         }
         const topicOfSong = await Topic.findOne({ _id: song.topicId, deleted: false }).select('title slug');
-        const singerOfSong = await Singer.findOne({ _id: song.singer?.singerId, deleted: false }).select('id fullName slug');
+        const singerOfSong = await Singer.findOne({ _id: song.singerId, deleted: false }).select('id fullName slug');
         const user = await User.findOne({ userToken: req.cookies.userToken, status: 'active', deleted: false }).select('likeSongs favoriteSongs');
 
         const liked: boolean = (user?.likeSongs.find(id => id === song.id) ? true : false);
         const favorited: boolean = (user?.favoriteSongs.find(id => id === song.id) ? true : false);
         const songs = await Song.find({
-            'singer.singerId': song.singer?.singerId,
+            singerId: song.singerId,
             _id: { $ne: song._id },
             status: 'active',
             deleted: false

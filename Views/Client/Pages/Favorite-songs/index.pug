@@ -2,20 +2,26 @@ extends ../../Layouts/default.pug
 include ../../Mixins/box-head.pug 
 
 block main 
-    .container.my-3 
+    .container.my-4
         .row 
             .col-12 
                 +box-head(pageTitle)
-        .row 
+        .favorite-songs-list
             each song in songs 
-                .col-6.mb-3 
-                    .song-item 
-                        .inner-image 
-                            a(href=`/song/detail/${song.slug}`) 
-                                img(src=song.avatar, alt="Song avatar")
-                        .inner-content 
-                            .inner-title 
-                                a(href=`/song/detail/${song.slug}`) #{song.title}
-                            .inner-singer 
-                                i.fa-solid.fa-microphone-lines 
-                                | #{song.singer}
+                .song-item
+                    .song-image
+                        a(href=`/songs/detail/${song.slug}`)
+                            img(src=song.avatar, alt=song.title)
+                    .song-content
+                        .song-title
+                            a(href=`/songs/detail/${song.slug}`)= song.title
+                        .song-info
+                            .singer
+                                i.fa-solid.fa-microphone-lines
+                                span= song.infoSinger.fullName
+                            .favorite
+                                i.fa-regular.fa-heart
+                                span Favorite
+                            .time
+                                i.fa-regular.fa-clock
+                                span 20/10/2023

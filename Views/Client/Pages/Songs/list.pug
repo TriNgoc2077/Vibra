@@ -8,28 +8,21 @@ block main
                 +box-head(pageTitle)
         
         .row.g-4
-            each song in songs
-                .col-sm-6.col-lg-4
-                    .card.h-100.song-card.border-0.shadow-sm
-                        .card-img-wrapper.position-relative
-                            a(href=`/songs/detail/${song.slug}`)
-                                img.card-img-top(
-                                    src=song.avatar
-                                    alt=song.title
-                                    style="height: 270px; object-fit: cover;"
-                                )
-                        .card-body
-                            h5.card-title.mb-3
-                                a.text-decoration-none.text-dark(href=`/songs/detail/${song.slug}`) #{song.title}
-                            
-                            .d-flex.align-items-center.mb-2
-                                i.fa-solid.fa-microphone-lines.me-2.text-primary
-                                span.text-muted #{song.singer.fullName}
-                            
-                            .d-flex.justify-content-between.align-items-center
-                                .d-flex.align-items-center
-                                    i.fa-solid.fa-thumbs-up.me-2.text-success
-                                    span.text-muted #{song.like}
-                                .d-flex.align-items-center
-                                    i.fa-regular.fa-clock.me-2.text-info
-                                    span.text-muted Today
+            each song in songs 
+                .song-item
+                    .song-image
+                        a(href=`/songs/detail/${song.slug}`)
+                            img(src=song.avatar, alt=song.title)
+                    .song-content
+                        .song-title
+                            a(href=`/songs/detail/${song.slug}`)= song.title
+                        .song-info
+                            .singer
+                                i.fa-solid.fa-microphone-lines
+                                a.text-decoration-none.singer(href=`/singer/${song.infoSinger.slug}`)= song.infoSinger.fullName
+                            .favorite
+                                i.fa-regular.fa-heart
+                                span Favorite
+                            .time
+                                i.fa-regular.fa-clock
+                                span 20/10/2023
