@@ -174,3 +174,44 @@ if (showAlert) {
     });
 }
 // end show alert
+
+//search suggest 
+const boxSearch = document.querySelector('.box-search');
+if (boxSearch) {
+    const inputSearch = boxSearch.querySelector("input[name='keyword']");
+    const boxSuggest = boxSearch.querySelector('.inner-suggest');
+    inputSearch.addEventListener('keyup', (e) => {
+        const keyword = inputSearch.value;
+
+        if (keyword) {
+            const link = `/search/suggest?keyword=${keyword}`;
+            fetch(link)
+                .then(res => res.json())
+                .then(data => {
+                    const songs = data.songs;
+                    if (songs.length) {
+                        boxSuggest.classList.add('show');
+                        const htmls = songs.map(song => {
+                            return `
+                                <a class="inner-item" href="/songs/detail/${song.slug}">
+                                    <div class="inner-image">   
+                                        <img src=${song.avatar} alt="avatar song"></div>
+                                    <div class="inner-info">
+                                        <div class="inner-title">${song.title}</div>
+                                        <div class="inner-singer"> <i class="fa-solid fa-microphone-lines"></i>${song.infoSinger.fullName}</div>
+                                    </div>
+                                </a>`;
+                        });
+                        const boxList = boxSuggest.querySelector('.inner-list');
+                        boxList.innerHTML = htmls.join("");
+                    } else {
+                    }
+    
+                });
+        } else {
+            if (boxSuggest.classList.contains('show')) {
+                boxSuggest.classList.remove('show');
+            }
+        }
+    });
+}

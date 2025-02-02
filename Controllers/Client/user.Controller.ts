@@ -105,10 +105,10 @@ export const registerPost = async (req: Request, res: Response) => {
                 path: '/', 
                 secure: process.env.NODE_ENV === 'production', // Only send cookies over HTTPS in production environments
                 sameSite: 'strict',   // Prevent cookies from being sent in cross-site requests
-                maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year in miliseconds
+                maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in miliseconds
             });
               
-			res.redirect("/");
+			res.redirect("/topics");
 		}
 	} catch (error) {
         console.log((error as Error).message); 

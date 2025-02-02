@@ -280,3 +280,123 @@ audio::-webkit-media-controls-panel {
 .singer:hover {
     color:#0056b3;
 }
+ /* suggest search  */
+.box-search {
+    position: relative;
+}
+
+.box-search .inner-suggest {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    width: 100%;
+    max-height: 350px;
+    background: #fff;
+    border: none; 
+    border-radius: 8px;
+    z-index: 100; 
+    overflow-y: auto;
+    display: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease; 
+}
+
+/* Custom scrollbar cho suggest box */
+.box-search .inner-suggest::-webkit-scrollbar {
+    width: 6px;
+}
+
+.box-search .inner-suggest::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.box-search .inner-suggest::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+.box-search .inner-suggest.show {
+    display: block;
+    animation: fadeIn 0.2s ease-in-out;
+
+}
+
+.box-search .inner-suggest .inner-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    border-bottom: 1px solid #eee; 
+    transition: background-color 0.2s ease;
+}
+
+.box-search .inner-suggest .inner-item:hover {
+    background: #f8f9fa;
+    transform: translateX(5px);
+    transition: all 0.2s ease;
+    text-decoration: none;
+
+}
+
+.box-search .inner-suggest .inner-item .inner-image {
+    width: 50px;
+    aspect-ratio: 1/1;
+    border-radius: 8px; 
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.box-search .inner-suggest .inner-item .inner-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.box-search .inner-suggest .inner-item:hover .inner-image img {
+    transform: scale(1.05); 
+}
+
+.box-search .inner-suggest .inner-item .inner-info {
+    flex: 1;
+    margin-left: 15px; 
+}
+
+.box-search .inner-suggest .inner-item .inner-info .inner-title {
+    white-space: pre-wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d2d2d; 
+}
+
+.box-search .inner-suggest .inner-item .inner-info .inner-singer {
+    font-size: 13px;
+    font-weight: 400;
+    color: #666; 
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+}
+
+.box-search .inner-suggest .inner-item .inner-info .inner-singer i {
+    margin-right: 5px;
+    font-size: 12px;
+    color: #4d007d;
+}
+/* animation  */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
