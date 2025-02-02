@@ -5,7 +5,22 @@ header.header
                 .inner-logo 
                     a(href="/")
                         img(src="/Images/logo.svg", alt="Logo" style="width: 150px; height: 150px")
-            .col-9 
+            .col-5 
+                .box-search 
+                    form(action="/search/result" method="GET")
+                        .form-group.d-flex.mb-0 
+                            input(
+                                type="text"
+                                placeholder="Enter keyword"
+                                class="form-control"
+                                name="keyword"
+                                value=keyword
+                            )
+                            button(
+                                type="submit"
+                                class="btn btn-primary"
+                            ) Search
+            .col-4
                 .inner-menu 
                     ul
                         li 
