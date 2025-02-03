@@ -18,6 +18,20 @@ if (aplayer) {
         volume: 1.0
     });
     // ap.on('ended', function...);
+    ap.on('ended', function () {
+        const option = {
+            method: "PATCH"
+        };
+        const link = `/songs/listens/${dataSong._id}`;
+        fetch(link, option)
+            .then(res => res.json())
+            .then(data => {
+                if (data.code == 200) {
+                    const listens = document.querySelector('.listens span');
+                    listens.innerHTML = `${data.listens} listens`;
+                }
+            });
+    });
 }
 //toast
 function showToast(message) {
@@ -212,6 +226,16 @@ if (boxSearch) {
             if (boxSuggest.classList.contains('show')) {
                 boxSuggest.classList.remove('show');
             }
+        }
+    });
+    inputSearch.addEventListener('blur', (e) => {
+        if (boxSuggest.classList.contains('show')) {
+            boxSuggest.classList.remove('show');
+        }
+    });
+    inputSearch.addEventListener('focus', (e) => {
+        if (inputSearch.valie != '' && !boxSuggest.classList.contains('show')) {
+            boxSuggest.classList.add('show');
         }
     });
 }

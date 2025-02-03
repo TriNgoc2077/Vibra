@@ -12,6 +12,9 @@ block main
                             .meta-item
                                 i.fa-regular.fa-clock.me-2
                                 span.text-muted 20/10/2023
+                            .meta-item.listens
+                                i.fa-solid.fa-headphones.me-2
+                                span #{song.listens} listens
                             .meta-item
                                 i.fa-solid.fa-microphone-lines.me-2
                                 a(href=`/singer/${infoSinger.slug}`).text-primary #{infoSinger.fullName}

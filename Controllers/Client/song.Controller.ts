@@ -13,8 +13,9 @@ interface Song {
     avatar: string; 
     singerId: string;
     like: number;
+    listens: number;
     slug: string;
-    favorited: boolean;
+    favorited?: boolean;
     infoSinger?: Singer | null;
 }
 //[GET] /topics/
@@ -195,6 +196,41 @@ export const favorite = async (req: Request, res: Response) => {
        res.json({
         code: 400,
         message: 'remove failed'
+       });
+       res.redirect(req.get("Referrer") || "/");
+    }
+}
+
+//[PATCH] /listens/:songId
+export const listens = async (req: Request, res: Response) => {
+    try {    
+        const songId: string = req.params.songId;
+        const song = await Song.findOne({ 
+            _id: songId,
+            status: "active",
+            deleted: false 
+        });
+        if (!song) {
+            throw new Error('not found song');
+        }
+        const listens: number = song.listens + 1;
+        await Song.updateOne(
+            { _id: songId },
+            { listens: listens }
+        )
+        const refreshSong = await Song.findOne(
+            { _id: songId }
+        ) as Song;
+        res.json({
+            code: 200,
+            message: 'increase successfully !',
+            listens: refreshSong.listens
+        });
+    } catch(error) {
+       console.log((error as Error).message); 
+       res.json({
+        code: 400,
+        message: (error as Error).message
        });
        res.redirect(req.get("Referrer") || "/");
     }
