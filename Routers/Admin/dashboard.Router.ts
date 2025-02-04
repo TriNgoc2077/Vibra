@@ -5,4 +5,4 @@ import * as Controller from '../../Controllers/Admin/dashboard.Controller';
 
 router.get('/', Controller.index);
 
-export const dashboardRouter: Router = router;
+export const dashboardRouters: Router = router;

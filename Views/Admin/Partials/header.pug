@@ -1,17 +1,35 @@
-header.header 
-    .container-fluid 
-        .row.align-items-center 
-            .col-3 
-                .inner-logo 
-                    a(href=`${prefixAdmin}/dashboard`) ADMIN PORTAL 
-
-            .col-9 
-                .text-right 
-                    a(
-                        href=`${prefixAdmin}/my-account`
-                        class='btn btn-primary btn-sm mr-2'
-                    )  Cao Tri Ngoc 
-                    a(
-                        href=`${prefixAdmin}/auth/logout`
-                        class='btn btn-danger btn-sm'
-                    ) Log out
+header.header   
+    .container-fluid   
+        .row.align-items-center   
+            .col-3   
+                .inner-logo   
+                    a(href="/admin/dashboard" class="text-decoration-none")  
+                        i.fas.fa-shield-alt.me-2  
+                        | Admin Portal  
+            .col-9  
+                .d-flex.justify-content-end.align-items-center  
+                    .search-box.me-4  
+                        input(type="text" placeholder="Search..." class="form-control form-control-sm")  
+                    .user-info.me-3.text-end  
+                        .user-name Cao Tri Ngoc
+                        .user-email caonguyentringoc@gmail.com 
+                    .user-profile.dropdown  
+                        img(
+                            src="/Images/avatar.svg"  
+                            alt="User"   
+                            class="rounded-circle dropdown-toggle"  
+                            width="40"  
+                            data-bs-toggle="dropdown")  
+                        ul.dropdown-menu.dropdown-menu-end  
+                            li  
+                                a.dropdown-item(href=`${prefixAdmin}/my-account`)  
+                                    i.fas.fa-user.me-2
+                                    | Profile
+                            li 
+                                a.dropdown-item(href="#")
+                                    i.fas.fa-cog.me-2
+                                    | Settings
+                            li  
+                                a.dropdown-item(href=`${prefixAdmin}/auth/logout`)  
+                                    i.fas.fa-sign-out-alt.me-2  
+                                    | Logout
