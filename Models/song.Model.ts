@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-
+import slug from 'mongoose-slug-updater';
+mongoose.plugin(slug);
 const songSchema = new mongoose.Schema(
     {
         title: String,
