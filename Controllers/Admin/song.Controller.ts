@@ -44,7 +44,11 @@ export const create = async (req: Request, res: Response) => {
 //[POST] /admin/createPost
 export const createPost = async (req: Request, res: Response) => {
     try {
-        const song = new Song(req.body);
+        let dataSong = req.body;
+        // after upload, avatar and audio return an array (due to upload fields)
+        dataSong.avatar = dataSong.avatar[0];
+        dataSong.audio = dataSong.audio[0];
+        const song = new Song(dataSong);
         await song.save();
         res.redirect(`${systemConfig.prefixAdmin}/songs`);
     } catch(error) {

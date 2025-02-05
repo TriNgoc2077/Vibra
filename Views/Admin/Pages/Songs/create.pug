@@ -52,6 +52,15 @@ block main
                 upload-image-preview  
             )  
         .form-group 
+            label(for='audio') File audio
+            input(
+                type='file'
+                class='form-control-file'
+                id='audio'
+                name='audio'
+                accept='audio/*'
+            ) 
+        .form-group 
             label(for='desc') Description 
             textarea(
                 type='text'

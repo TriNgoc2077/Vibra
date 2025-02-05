@@ -1,16 +1,23 @@
 import { Request, Response, NextFunction } from "express";
 
 export const validateCreate = (req: Request, res: Response, next: NextFunction) => {
-    try {        
-        console.log(req.body.title);
-        console.log(req.body.topicId);
-        console.log(req.body.singerId);
+    try {
+        const properties: string[] = ['title', 'topicId', 'singerId', 'audio', 'description', 'status', 'avatar'];
+        const bodyKeys = Object.keys(req.body);
         
-        if (!req.body.title || !req.body.topicId || !req.body.singerId) {
-            throw new Error('Title is empty !');
+        const extraProps = bodyKeys.filter(key => !properties.includes(key));
+        if (extraProps.length > 0) {
+            req.flash('error', `Has redundant properties !`);
+            return res.redirect(req.get("Referrer") || "/");
         }
+        const missingProps = properties.slice(0, 4).filter(prop => !req.body[prop]);
+        if (missingProps.length > 0) {
+            req.flash('error', `Missing required properties`);
+            return res.redirect(req.get("Referrer") || "/");
+        }
+
         next();
-    } catch(error) {
+    } catch (error) {
         req.flash('error', (error as Error).message);
         res.redirect(req.get("Referrer") || "/");
     }
