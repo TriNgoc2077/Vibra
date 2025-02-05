@@ -51,7 +51,7 @@ block main
                 src=""  
                 upload-image-preview  
             )  
-        .form-group 
+        .form-group(upload-audio)
             label(for='audio') File audio
             input(
                 type='file'
@@ -59,7 +59,13 @@ block main
                 id='audio'
                 name='audio'
                 accept='audio/*'
+                upload-audio-input
             ) 
+            audio.d-none(  
+                controls
+                upload-audio-play  
+            )  
+                source(src='')
         .form-group 
             label(for='desc') Description 
             textarea(
