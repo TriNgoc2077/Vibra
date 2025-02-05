@@ -1,42 +1,10 @@
 import { Request, Response, NextFunction } from "express";
-const streamifier = require("streamifier");
-const cloudinary = require("cloudinary").v2;
-import dotenv from "dotenv";
-dotenv.config();
-
-cloudinary.config({ 
-    cloud_name: process.env.CLOUD_NAME, 
-    api_key: process.env.CLOUD_KEY, 
-    api_secret: process.env.CLOUD_SECRET 
-});
-
-let streamUpload = (fileBuffer: Buffer, resourceType: string = "auto"): Promise<any> => {
-    return new Promise((resolve, reject) => {
-        let stream = cloudinary.uploader.upload_stream(
-            { resource_type: resourceType }, 
-            (error: any, result: any) => {
-                if (result) {
-                    resolve(result.secure_url);
-                } else {
-                    reject(error);
-                }
-            }
-        );
-        streamifier.createReadStream(fileBuffer).pipe(stream);
-    });
-};
-
-async function upload(req: Request) {
-    if (req.file) {
-        const result = await streamUpload(req.file.buffer);
-        req.body[req.file.fieldname] = result;
-    }
-}
+import { streamUpload, uploadToCloudinary } from "../../Helpers/uploadToCloudinary";
 
 export const uploadSingle = async (req: Request, res: Response, next: NextFunction) => {
     if (req.file) {
         try {
-            await upload(req);
+            await uploadToCloudinary(req);
         } catch (error) {
             return res.status(500).json({ error: "File upload failed" });
         }
