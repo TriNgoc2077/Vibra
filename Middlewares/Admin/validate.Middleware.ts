@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 
 export const validateCreate = (req: Request, res: Response, next: NextFunction) => {
     try {
-        const properties: string[] = ['title', 'topicId', 'singerId', 'audio', 'description', 'status', 'avatar'];
+        const properties: string[] = ['title', 'topicId', 'singerId', 'audio', 'description', 'status', 'avatar', 'lyrics'];
         const bodyKeys = Object.keys(req.body);
         
         const extraProps = bodyKeys.filter(key => !properties.includes(key));

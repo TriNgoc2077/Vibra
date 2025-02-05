@@ -60,10 +60,11 @@ block main
                 name='audio'
                 accept='audio/*'
                 upload-audio-input
+                required
             ) 
             audio.d-none(  
                 controls
-                upload-audio-play  
+                upload-audio-preview  
             )  
                 source(src='')
         .form-group 
@@ -75,6 +76,14 @@ block main
                 name='description'
                 rows='5'
             )
+        .form-group 
+            label(for='lyrics') Lyrics 
+            textarea(
+                class='textarea-mce form-control'
+                id='lyrics'
+                name='lyrics'
+                rows='20'
+            ) 
         .form-group.form-check.form-check-inline 
             input(
                 type="radio"
