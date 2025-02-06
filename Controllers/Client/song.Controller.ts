@@ -3,6 +3,7 @@ import Topic from '../../Models/topic.Model';
 import Song from '../../Models/song.Model';
 import Singer from '../../Models/singer.Model';
 import User from '../../Models/user.Model';
+import { removeTimestamps } from '../../Helpers/removeTimestamps';
 interface Singer {
     fullName: string;
     slug: string;
@@ -11,7 +12,9 @@ interface Song {
     id: string;
     title: string;
     avatar: string; 
+    topicId: string;
     singerId: string;
+    lyrics: string;
     like: number;
     listens: number;
     slug: string;
@@ -70,7 +73,7 @@ export const detail = async (req: Request, res: Response) => {
             slug: slugSong,
             status: "active",
             deleted: false
-        });
+        }) as Song;
         if (!song) {
             throw new Error('Not found song !');
         }
@@ -82,7 +85,8 @@ export const detail = async (req: Request, res: Response) => {
         const likeSongs = user?.likeSongs || [];
         const liked: boolean = (likeSongs.includes(song.id));
         const favorited: boolean = (favoriteSongs.includes(song.id));
-        
+        const lyrics = removeTimestamps(song.lyrics);
+
         const songs = await Song.find({
             singerId: song.singerId,
             _id: { $ne: song.id },
@@ -98,6 +102,7 @@ export const detail = async (req: Request, res: Response) => {
         res.render('client/pages/Songs/detail', { 
             pageTitle: song.title,
             song: song,
+            lyrics: lyrics,
             infoTopic: topicOfSong,
             infoSinger: singerOfSong,
             liked: liked,
