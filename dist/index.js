@@ -52,7 +52,7 @@ dotenv_1.default.config();
 database.connect();
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3001;
-app.set('views', './views');
+app.set('views', './Views');
 app.set('view engine', 'pug');
 app.locals.prefixAdmin = config_1.systemConfig.prefixAdmin;
 app.use((0, method_override_1.default)('_method'));
