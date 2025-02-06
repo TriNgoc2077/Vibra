@@ -11,14 +11,14 @@ html
         link(rel="icon", href="/images/favicon.webp", type="image/webp")
 
     body 
-        include ../mixins/alert.pug 
+        include ../Mixins/alert.pug 
         +alert-success(3000)
         +alert-error(3000)
-        include ../partials/header.pug
+        include ../Partials/header.pug
 
         block main
 
-        include ../partials/footer.pug
+        include ../Partials/footer.pug
 
         script(src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js") 
         script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js")
