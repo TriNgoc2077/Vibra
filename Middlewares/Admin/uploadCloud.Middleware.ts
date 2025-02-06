@@ -6,7 +6,8 @@ export const uploadSingle = async (req: Request, res: Response, next: NextFuncti
         try {
             await uploadToCloudinary(req);
         } catch (error) {
-            return res.status(500).json({ error: "File upload failed" });
+            console.log(error);
+            // return res.status(500).json({ error: "File upload failed" });
         }
     }
     next();
