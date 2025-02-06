@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import Song from "../../Models/song.Model";
-import Singer from "../../Models/singer.Model";
-import User from "../../Models/user.Model";
-import { convertToSlug } from "../../Helpers/convertToSlug";
+import Song from "../../models/song.Model";
+import Singer from "../../models/singer.Model";
+import User from "../../models/user.Model";
+import { convertToSlug } from "../../helpers/convertToSlug";
 interface Singer {
     id: string;
     fullName?: string;
@@ -51,7 +51,7 @@ export const result = async (req: Request, res: Response) => {
         }
         const type = req.params.responseType;
         if (type === 'result') {
-            res.render('Client/Pages/Search/result', {
+            res.render('client/pages/search/result', {
                 pageTitle: `Result of ${keyword}`,
                 keyword: keyword,
                 songs: resultSongs

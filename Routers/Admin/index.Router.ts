@@ -1,6 +1,6 @@
 import { Express } from 'express';
 import { dashboardRouters } from './dashboard.Router';
-import { systemConfig } from '../../Config/config';
+import { systemConfig } from '../../config/config';
 import { topicRouters } from './topic.Router';
 import { songRouters } from './song.Router';
 import { uploadRouters } from './upload.Router';

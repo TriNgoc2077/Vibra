@@ -13,11 +13,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.listens = exports.favorite = exports.like = exports.detail = exports.listSong = void 0;
-const topic_Model_1 = __importDefault(require("../../Models/topic.Model"));
-const song_Model_1 = __importDefault(require("../../Models/song.Model"));
-const singer_Model_1 = __importDefault(require("../../Models/singer.Model"));
-const user_Model_1 = __importDefault(require("../../Models/user.Model"));
-const removeTimestamps_1 = require("../../Helpers/removeTimestamps");
+const topic_Model_1 = __importDefault(require("../../models/topic.Model"));
+const song_Model_1 = __importDefault(require("../../models/song.Model"));
+const singer_Model_1 = __importDefault(require("../../models/singer.Model"));
+const user_Model_1 = __importDefault(require("../../models/user.Model"));
+const removeTimestamps_1 = require("../../helpers/removeTimestamps");
 const listSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const slug = req.params.slugTopic;
@@ -45,7 +45,7 @@ const listSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             song.favorited = (favoriteSongs.includes(song.id));
             return song;
         })));
-        res.render('client/pages/Songs/list', {
+        res.render('client/pages/songs/list', {
             pageTitle: topic.title,
             songs: songsWithSingers
         });
@@ -85,7 +85,7 @@ const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             song.favorited = (favoriteSongs.includes(song.id));
         }
         const topics = yield topic_Model_1.default.find({ deleted: false }).limit(4);
-        res.render('client/pages/Songs/detail', {
+        res.render('client/pages/songs/detail', {
             pageTitle: song.title,
             song: song,
             lyrics: lyrics,

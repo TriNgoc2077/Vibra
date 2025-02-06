@@ -2,12 +2,12 @@ const fs = require('fs-extra');
 
 const listFolderCopy = [
     {
-        sourceDirectory: './Views',
-        targetDirectory: './dist/Views'
+        sourceDirectory: 'views',
+        targetDirectory: 'dist/views'
     },
     {
-        sourceDirectory: './Public',
-        targetDirectory: './dist/Public'
+        sourceDirectory: 'public',
+        targetDirectory: 'dist/public'
     }
 ];
 

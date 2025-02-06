@@ -36,6 +36,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.searchRouter = void 0;
 const express_1 = require("express");
 const router = (0, express_1.Router)();
-const Controller = __importStar(require("../../Controllers/Client/search.Controller"));
+const Controller = __importStar(require("../../controllers/client/search.Controller"));
 router.get('/:responseType', Controller.result);
 exports.searchRouter = router;

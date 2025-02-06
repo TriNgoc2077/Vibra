@@ -13,14 +13,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.editPatch = exports.edit = exports.createPost = exports.create = exports.index = void 0;
-const song_Model_1 = __importDefault(require("../../Models/song.Model"));
-const topic_Model_1 = __importDefault(require("../../Models/topic.Model"));
-const singer_Model_1 = __importDefault(require("../../Models/singer.Model"));
-const config_1 = require("../../Config/config");
+const song_Model_1 = __importDefault(require("../../models/song.Model"));
+const topic_Model_1 = __importDefault(require("../../models/topic.Model"));
+const singer_Model_1 = __importDefault(require("../../models/singer.Model"));
+const config_1 = require("../../config/config");
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const songs = yield song_Model_1.default.find({ deleted: false });
-        res.render('Admin/Pages/Songs/index', {
+        res.render('admin/pages/songs/index', {
             pageTitle: 'Topics Management',
             songs: songs
         });
@@ -41,7 +41,7 @@ const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             status: 'active',
             deleted: false
         }).select('fullName');
-        res.render('Admin/Pages/Songs/create', {
+        res.render('admin/pages/songs/create', {
             pageTitle: 'Topics Management',
             topics: topics,
             singers: singers
@@ -83,7 +83,7 @@ const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const singers = yield singer_Model_1.default.find({
             deleted: false
         }).select('fullName');
-        res.render('Admin/Pages/Songs/edit', {
+        res.render('admin/pages/songs/edit', {
             pageTitle: 'Edit Song',
             song: song,
             topics: topics,

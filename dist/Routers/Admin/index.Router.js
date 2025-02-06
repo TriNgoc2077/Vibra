@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const dashboard_Router_1 = require("./dashboard.Router");
-const config_1 = require("../../Config/config");
+const config_1 = require("../../config/config");
 const topic_Router_1 = require("./topic.Router");
 const song_Router_1 = require("./song.Router");
 const upload_Router_1 = require("./upload.Router");

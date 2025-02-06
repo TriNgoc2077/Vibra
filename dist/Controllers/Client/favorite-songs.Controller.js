@@ -13,9 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.index = void 0;
-const user_Model_1 = __importDefault(require("../../Models/user.Model"));
-const song_Model_1 = __importDefault(require("../../Models/song.Model"));
-const singer_Model_1 = __importDefault(require("../../Models/singer.Model"));
+const user_Model_1 = __importDefault(require("../../models/user.Model"));
+const song_Model_1 = __importDefault(require("../../models/song.Model"));
+const singer_Model_1 = __importDefault(require("../../models/singer.Model"));
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield user_Model_1.default.findOne({ userToken: req.cookies.userToken, status: 'active', deleted: false }).select("favoriteSongs");
@@ -28,7 +28,7 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             song.infoSinger = infoSinger;
             return song;
         })));
-        res.render('client/Pages/Favorite-songs/index', {
+        res.render('client/pages/favorite-songs/index', {
             pageTitle: 'Favorite Song',
             songs: songs
         });

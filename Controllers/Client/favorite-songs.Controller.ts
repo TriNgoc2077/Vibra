@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import User from "../../Models/user.Model";
-import Song from "../../Models/song.Model";
-import Singer from "../../Models/singer.Model";
+import User from "../../models/user.Model";
+import Song from "../../models/song.Model";
+import Singer from "../../models/singer.Model";
 interface Singer {
     fullName: string;
     slug: string;
@@ -29,7 +29,7 @@ export const index = async (req: Request, res: Response) => {
             })
             
         );
-        res.render('client/Pages/Favorite-songs/index', {
+        res.render('client/pages/favorite-songs/index', {
             pageTitle: 'Favorite Song',
             songs: songs
         });

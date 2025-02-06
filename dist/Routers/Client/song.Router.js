@@ -36,7 +36,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.songRouters = void 0;
 const express_1 = require("express");
 const router = (0, express_1.Router)();
-const Controller = __importStar(require("../../Controllers/Client/song.Controller"));
+const Controller = __importStar(require("../../controllers/client/song.Controller"));
 router.get('/:slugTopic', Controller.listSong);
 router.get('/detail/:slugSong', Controller.detail);
 router.patch('/like/:typeLike/:songId', Controller.like);

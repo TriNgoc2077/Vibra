@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import Topic from '../../Models/topic.Model';
+import Topic from '../../models/topic.Model';
 
 //[GET] /topics/
 export const topics = async (req: Request, res: Response) => {

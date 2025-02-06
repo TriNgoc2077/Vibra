@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import Topic from '../../Models/topic.Model';
-import Song from '../../Models/song.Model';
-import Singer from '../../Models/singer.Model';
-import User from '../../Models/user.Model';
-import { removeTimestamps } from '../../Helpers/removeTimestamps';
+import Topic from '../../models/topic.Model';
+import Song from '../../models/song.Model';
+import Singer from '../../models/singer.Model';
+import User from '../../models/user.Model';
+import { removeTimestamps } from '../../helpers/removeTimestamps';
 interface Singer {
     fullName: string;
     slug: string;
@@ -55,7 +55,7 @@ export const listSong = async (req: Request, res: Response) => {
                 return song;
             })
         );
-        res.render('client/pages/Songs/list', { 
+        res.render('client/pages/songs/list', { 
             pageTitle: topic.title,
             songs: songsWithSingers
         }); 
@@ -99,7 +99,7 @@ export const detail = async (req: Request, res: Response) => {
 
         const topics = await Topic.find({ deleted: false }).limit(4);
         
-        res.render('client/pages/Songs/detail', { 
+        res.render('client/pages/songs/detail', { 
             pageTitle: song.title,
             song: song,
             lyrics: lyrics,

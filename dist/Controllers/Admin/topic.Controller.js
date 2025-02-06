@@ -13,11 +13,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.index = void 0;
-const topic_Model_1 = __importDefault(require("../../Models/topic.Model"));
+const topic_Model_1 = __importDefault(require("../../models/topic.Model"));
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const topics = yield topic_Model_1.default.find({ deleted: false });
-        res.render('Admin/Pages/Topics/index', {
+        res.render('admin/pages/topics/index', {
             pageTitle: 'Topics Management',
             topics: topics
         });

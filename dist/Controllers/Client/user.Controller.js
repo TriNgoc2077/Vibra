@@ -14,13 +14,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginPost = exports.login = exports.registerPost = exports.verify = exports.verifyPost = exports.register = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
-const user_Model_1 = __importDefault(require("../../Models/user.Model"));
-const generate_1 = require("../../Helpers/generate");
-const OTP_Model_1 = __importDefault(require("../../Models/OTP.Model"));
-const sendMail_1 = require("../../Helpers/sendMail");
+const user_Model_1 = __importDefault(require("../../models/user.Model"));
+const generate_1 = require("../../helpers/generate");
+const OTP_Model_1 = __importDefault(require("../../models/OTP.Model"));
+const sendMail_1 = require("../../helpers/sendMail");
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.render("client/Pages/User/register", {
+        res.render("client/pages/user/register", {
             titlePage: "Register",
         });
     }
@@ -67,7 +67,7 @@ const verifyPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.verifyPost = verifyPost;
 const verify = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.render("client/Pages/User/verify", {
+        res.render("client/pages/user/verify", {
             titlePage: "Verify Email",
             data: req.session.userInfo
         });
@@ -119,7 +119,7 @@ const registerPost = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 exports.registerPost = registerPost;
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.render('client/Pages/User/login', {
+        res.render('client/pages/user/login', {
             pageTitle: 'Login'
         });
     }

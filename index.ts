@@ -1,14 +1,14 @@
 import express, { Express } from 'express';
 import dotenv from 'dotenv';
-import * as database from './Config/database';
-import clientRouters from './Routers/Client/index.Router';
+import * as database from './config/database';
+import clientRouters from './routers/client/index.Router';
 import session from 'express-session';
 import flash from 'express-flash';
 import cors from 'cors';
 import methodOverride from 'method-override';
 import cookieParser from 'cookie-parser';
-import adminRouter from './Routers/Admin/index.Router';
-import { systemConfig } from './Config/config';
+import adminRouter from './routers/admin/index.Router';
+import { systemConfig } from './config/config';
 import path from 'path';
 dotenv.config();
 database.connect();
@@ -16,7 +16,7 @@ database.connect();
 const app: Express = express();
 const port: number | string = process.env.PORT || 3001;
 
-app.set('views', './Views');
+app.set('views', './views');
 app.set('view engine', 'pug');
 app.locals.prefixAdmin = systemConfig.prefixAdmin; //global variable
 

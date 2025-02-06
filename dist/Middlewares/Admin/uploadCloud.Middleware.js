@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.uploadFields = exports.uploadSingle = void 0;
-const uploadToCloudinary_1 = require("../../Helpers/uploadToCloudinary");
+const uploadToCloudinary_1 = require("../../helpers/uploadToCloudinary");
 const uploadSingle = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     if (req.file) {
         try {

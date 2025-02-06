@@ -1,6 +1,6 @@
 import { Router } from "express";
 const router: Router = Router();
-import * as Controller from '../../Controllers/Client/song.Controller';
+import * as Controller from '../../controllers/client/song.Controller';
 
 router.get('/:slugTopic', Controller.listSong);
 router.get('/detail/:slugSong', Controller.detail);

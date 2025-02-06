@@ -2,8 +2,8 @@ import { Router } from 'express';
 import multer from 'multer';
 const router: Router = Router();
 const upload = multer();
-import * as Controller from '../../Controllers/Admin/upload.Controller';
-import { uploadSingle } from '../../Middlewares/Admin/uploadCloud.Middleware';
+import * as Controller from '../../controllers/admin/upload.Controller';
+import { uploadSingle } from '../../middlewares/admin/uploadCloud.Middleware';
 
 router.post(
     '/', 

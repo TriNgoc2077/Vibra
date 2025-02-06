@@ -13,10 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.result = void 0;
-const song_Model_1 = __importDefault(require("../../Models/song.Model"));
-const singer_Model_1 = __importDefault(require("../../Models/singer.Model"));
-const user_Model_1 = __importDefault(require("../../Models/user.Model"));
-const convertToSlug_1 = require("../../Helpers/convertToSlug");
+const song_Model_1 = __importDefault(require("../../models/song.Model"));
+const singer_Model_1 = __importDefault(require("../../models/singer.Model"));
+const user_Model_1 = __importDefault(require("../../models/user.Model"));
+const convertToSlug_1 = require("../../helpers/convertToSlug");
 const result = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const keyword = `${req.query.keyword}`;
@@ -43,7 +43,7 @@ const result = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         const type = req.params.responseType;
         if (type === 'result') {
-            res.render('Client/Pages/Search/result', {
+            res.render('client/pages/search/result', {
                 pageTitle: `Result of ${keyword}`,
                 keyword: keyword,
                 songs: resultSongs

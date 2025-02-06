@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.topics = void 0;
-const topic_Model_1 = __importDefault(require("../../Models/topic.Model"));
+const topic_Model_1 = __importDefault(require("../../models/topic.Model"));
 const topics = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const topics = yield topic_Model_1.default.find({ deleted: false });
     res.render('client/pages/topics/index', {

@@ -2,9 +2,9 @@ import { Router } from 'express';
 const router: Router = Router();
 import multer from 'multer';
 const upload = multer();
-import * as Controller from '../../Controllers/Admin/song.Controller';
-import { uploadSingle, uploadFields } from '../../Middlewares/Admin/uploadCloud.Middleware';
-import { validateCreate } from '../../Middlewares/Admin/validate.Middleware';
+import * as Controller from '../../controllers/admin/song.Controller';
+import { uploadSingle, uploadFields } from '../../middlewares/admin/uploadCloud.Middleware';
+import { validateCreate } from '../../middlewares/admin/validate.Middleware';
 router.get('/', Controller.index);
 router.get('/create', Controller.create);
 

@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.index = void 0;
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.render('Admin/Pages/Dashboard/index', {
+        res.render('admin/pages/dashboard/index', {
             pageTitle: 'Dashboard'
         });
     }

@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import Song from "../../Models/song.Model";
-import Topic from "../../Models/topic.Model";
-import Singer from "../../Models/singer.Model";
-import { systemConfig } from "../../Config/config";
+import Song from "../../models/song.Model";
+import Topic from "../../models/topic.Model";
+import Singer from "../../models/singer.Model";
+import { systemConfig } from "../../config/config";
 //[GET] /admin/songs
 export const index = async (req: Request, res: Response) => {
     try {
         const songs = await Song.find({ deleted: false });
 
-        res.render('Admin/Pages/Songs/index', {
+        res.render('admin/pages/songs/index', {
             pageTitle: 'Topics Management',
             songs: songs
         })
@@ -30,7 +30,7 @@ export const create = async (req: Request, res: Response) => {
             deleted: false
         }).select('fullName');
 
-        res.render('Admin/Pages/Songs/create', {
+        res.render('admin/pages/songs/create', {
             pageTitle: 'Topics Management',
             topics: topics,
             singers: singers
@@ -72,7 +72,7 @@ export const edit = async (req: Request, res: Response) => {
             deleted: false
         }).select('fullName');
 
-        res.render('Admin/Pages/Songs/edit', {
+        res.render('admin/pages/songs/edit', {
             pageTitle: 'Edit Song',
             song: song,
             topics: topics,

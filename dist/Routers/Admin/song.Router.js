@@ -41,9 +41,9 @@ const express_1 = require("express");
 const router = (0, express_1.Router)();
 const multer_1 = __importDefault(require("multer"));
 const upload = (0, multer_1.default)();
-const Controller = __importStar(require("../../Controllers/Admin/song.Controller"));
-const uploadCloud_Middleware_1 = require("../../Middlewares/Admin/uploadCloud.Middleware");
-const validate_Middleware_1 = require("../../Middlewares/Admin/validate.Middleware");
+const Controller = __importStar(require("../../controllers/admin/song.Controller"));
+const uploadCloud_Middleware_1 = require("../../middlewares/admin/uploadCloud.Middleware");
+const validate_Middleware_1 = require("../../middlewares/admin/validate.Middleware");
 router.get('/', Controller.index);
 router.get('/create', Controller.create);
 router.post('/create', upload.fields([

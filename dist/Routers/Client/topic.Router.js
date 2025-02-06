@@ -36,6 +36,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.topicRouters = void 0;
 const express_1 = require("express");
 const router = (0, express_1.Router)();
-const Controller = __importStar(require("../../Controllers/Client/topic.Controller"));
+const Controller = __importStar(require("../../controllers/client/topic.Controller"));
 router.get('/', Controller.topics);
 exports.topicRouters = router;

@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import bcrypt from 'bcrypt';
-import User from "../../Models/user.Model";
-import { generateRandomNumber, generateRandomString } from "../../Helpers/generate";
-import OTP from "../../Models/OTP.Model";
-import { sendMail } from "../../Helpers/sendMail";
+import User from "../../models/user.Model";
+import { generateRandomNumber, generateRandomString } from "../../helpers/generate";
+import OTP from "../../models/OTP.Model";
+import { sendMail } from "../../helpers/sendMail";
 declare module 'express-session' {
     interface SessionData {
       userInfo?: {
@@ -17,7 +17,7 @@ declare module 'express-session' {
 //[GET] /user/register
 export const register = async (req: Request, res: Response) => {
 	try {
-		res.render("client/Pages/User/register", {
+		res.render("client/pages/user/register", {
 			titlePage: "Register",
 		});
 	} catch (error) {
@@ -65,7 +65,7 @@ export const verifyPost = async (req: Request, res: Response) => {
 //[GET] /user/verify
 export const verify = async (req: Request, res: Response) => {
     try {
-        res.render("client/Pages/User/verify", {
+        res.render("client/pages/user/verify", {
             titlePage: "Verify Email",
             data: req.session.userInfo
         });
@@ -118,7 +118,7 @@ export const registerPost = async (req: Request, res: Response) => {
 //[GET] /user/login
 export const login = async (req: Request, res: Response) => {
     try {
-        res.render('client/Pages/User/login', {
+        res.render('client/pages/user/login', {
         pageTitle: 'Login' 
         });
     } catch(error) {
