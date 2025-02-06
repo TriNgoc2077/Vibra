@@ -16,7 +16,7 @@ database.connect();
 const app: Express = express();
 const port: number | string = process.env.PORT || 3001;
 
-app.set('views', './views');
+app.set("views", `${__dirname}/views`);
 app.set('view engine', 'pug');
 app.locals.prefixAdmin = systemConfig.prefixAdmin; //global variable
 
