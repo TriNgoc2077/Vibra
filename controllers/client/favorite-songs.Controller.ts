@@ -12,7 +12,7 @@ interface Song {
     singerId: string;
     slug: string;
     infoSinger?: Singer | null;
-}
+}  
 //[GET] /favorite-songs/
 export const index = async (req: Request, res: Response) => {
     try {
