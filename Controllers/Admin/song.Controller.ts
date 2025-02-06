@@ -8,7 +8,7 @@ export const index = async (req: Request, res: Response) => {
     try {
         const songs = await Song.find({ deleted: false });
 
-        res.render('admin/pages/songs/index', {
+        res.render('Admin/Pages/Songs/index', {
             pageTitle: 'Topics Management',
             songs: songs
         })
@@ -30,7 +30,7 @@ export const create = async (req: Request, res: Response) => {
             deleted: false
         }).select('fullName');
 
-        res.render('admin/pages/songs/create', {
+        res.render('Admin/Pages/Songs/create', {
             pageTitle: 'Topics Management',
             topics: topics,
             singers: singers
@@ -72,7 +72,7 @@ export const edit = async (req: Request, res: Response) => {
             deleted: false
         }).select('fullName');
 
-        res.render('admin/pages/songs/edit', {
+        res.render('Admin/Pages/Songs/edit', {
             pageTitle: 'Edit Song',
             song: song,
             topics: topics,

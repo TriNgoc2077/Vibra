@@ -16,7 +16,7 @@ exports.topics = void 0;
 const topic_Model_1 = __importDefault(require("../../Models/topic.Model"));
 const topics = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const topics = yield topic_Model_1.default.find({ deleted: false });
-    res.render('client/pages/topics/index', {
+    res.render('Client/Pages/Topics/index', {
         pageTitle: 'Song topics',
         topics: topics
     });

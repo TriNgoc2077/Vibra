@@ -28,7 +28,7 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             song.infoSinger = infoSinger;
             return song;
         })));
-        res.render('client/pages/favorite-songs/index', {
+        res.render('Client/Pages/Favorite-songs/index', {
             pageTitle: 'Favorite Song',
             songs: songs
         });

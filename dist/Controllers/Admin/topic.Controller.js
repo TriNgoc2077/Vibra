@@ -17,7 +17,7 @@ const topic_Model_1 = __importDefault(require("../../Models/topic.Model"));
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const topics = yield topic_Model_1.default.find({ deleted: false });
-        res.render('admin/pages/topics/index', {
+        res.render('Admin/Pages/Topics/index', {
             pageTitle: 'Topics Management',
             topics: topics
         });

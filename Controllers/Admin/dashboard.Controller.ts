@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 //[GET] /admin/dashboard
 export const index = async (req: Request, res: Response) => {
     try {
-        res.render('admin/pages/dashboard/index', {
+        res.render('Admin/Pages/Dashboard/index', {
             pageTitle: 'Dashboard'
         });
     } catch(error) {

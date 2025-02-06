@@ -55,7 +55,7 @@ export const listSong = async (req: Request, res: Response) => {
                 return song;
             })
         );
-        res.render('client/pages/songs/list', { 
+        res.render('Client/Pages/Songs/list', { 
             pageTitle: topic.title,
             songs: songsWithSingers
         }); 
@@ -99,7 +99,7 @@ export const detail = async (req: Request, res: Response) => {
 
         const topics = await Topic.find({ deleted: false }).limit(4);
         
-        res.render('client/pages/songs/detail', { 
+        res.render('Client/Pages/Songs/detail', { 
             pageTitle: song.title,
             song: song,
             lyrics: lyrics,

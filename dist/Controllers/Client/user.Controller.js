@@ -20,7 +20,7 @@ const OTP_Model_1 = __importDefault(require("../../Models/OTP.Model"));
 const sendMail_1 = require("../../Helpers/sendMail");
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.render("client/pages/user/register", {
+        res.render("Client/Pages/User/register", {
             titlePage: "Register",
         });
     }
@@ -67,7 +67,7 @@ const verifyPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.verifyPost = verifyPost;
 const verify = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.render("client/pages/user/verify", {
+        res.render("Client/Pages/User/verify", {
             titlePage: "Verify Email",
             data: req.session.userInfo
         });
@@ -119,7 +119,7 @@ const registerPost = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 exports.registerPost = registerPost;
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.render('client/pages/user/login', {
+        res.render('Client/Pages/User/login', {
             pageTitle: 'Login'
         });
     }

@@ -43,7 +43,7 @@ const result = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         const type = req.params.responseType;
         if (type === 'result') {
-            res.render('client/pages/search/result', {
+            res.render('Client/Pages/Search/result', {
                 pageTitle: `Result of ${keyword}`,
                 keyword: keyword,
                 songs: resultSongs

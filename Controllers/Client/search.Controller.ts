@@ -51,7 +51,7 @@ export const result = async (req: Request, res: Response) => {
         }
         const type = req.params.responseType;
         if (type === 'result') {
-            res.render('client/pages/search/result', {
+            res.render('Client/Pages/Search/result', {
                 pageTitle: `Result of ${keyword}`,
                 keyword: keyword,
                 songs: resultSongs

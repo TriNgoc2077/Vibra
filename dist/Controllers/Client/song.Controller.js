@@ -45,7 +45,7 @@ const listSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             song.favorited = (favoriteSongs.includes(song.id));
             return song;
         })));
-        res.render('client/pages/songs/list', {
+        res.render('Client/Pages/Songs/list', {
             pageTitle: topic.title,
             songs: songsWithSingers
         });
@@ -85,7 +85,7 @@ const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             song.favorited = (favoriteSongs.includes(song.id));
         }
         const topics = yield topic_Model_1.default.find({ deleted: false }).limit(4);
-        res.render('client/pages/songs/detail', {
+        res.render('Client/Pages/Songs/detail', {
             pageTitle: song.title,
             song: song,
             lyrics: lyrics,

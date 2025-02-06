@@ -29,7 +29,7 @@ export const index = async (req: Request, res: Response) => {
             })
             
         );
-        res.render('client/pages/favorite-songs/index', {
+        res.render('Client/Pages/Favorite-songs/index', {
             pageTitle: 'Favorite Song',
             songs: songs
         });

@@ -20,7 +20,7 @@ const config_1 = require("../../Config/config");
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const songs = yield song_Model_1.default.find({ deleted: false });
-        res.render('admin/pages/songs/index', {
+        res.render('Admin/Pages/Songs/index', {
             pageTitle: 'Topics Management',
             songs: songs
         });
@@ -41,7 +41,7 @@ const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             status: 'active',
             deleted: false
         }).select('fullName');
-        res.render('admin/pages/songs/create', {
+        res.render('Admin/Pages/Songs/create', {
             pageTitle: 'Topics Management',
             topics: topics,
             singers: singers
@@ -83,7 +83,7 @@ const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const singers = yield singer_Model_1.default.find({
             deleted: false
         }).select('fullName');
-        res.render('admin/pages/songs/edit', {
+        res.render('Admin/Pages/Songs/edit', {
             pageTitle: 'Edit Song',
             song: song,
             topics: topics,

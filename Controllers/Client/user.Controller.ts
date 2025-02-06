@@ -17,7 +17,7 @@ declare module 'express-session' {
 //[GET] /user/register
 export const register = async (req: Request, res: Response) => {
 	try {
-		res.render("client/pages/user/register", {
+		res.render("Client/Pages/User/register", {
 			titlePage: "Register",
 		});
 	} catch (error) {
@@ -65,7 +65,7 @@ export const verifyPost = async (req: Request, res: Response) => {
 //[GET] /user/verify
 export const verify = async (req: Request, res: Response) => {
     try {
-        res.render("client/pages/user/verify", {
+        res.render("Client/Pages/User/verify", {
             titlePage: "Verify Email",
             data: req.session.userInfo
         });
@@ -118,7 +118,7 @@ export const registerPost = async (req: Request, res: Response) => {
 //[GET] /user/login
 export const login = async (req: Request, res: Response) => {
     try {
-        res.render('client/pages/user/login', {
+        res.render('Client/Pages/User/login', {
         pageTitle: 'Login' 
         });
     } catch(error) {
