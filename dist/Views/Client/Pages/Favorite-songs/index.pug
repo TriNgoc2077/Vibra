@@ -1,0 +1,28 @@
+extends ../../Layouts/default.pug 
+include ../../Mixins/box-head.pug 
+
+block main 
+    .container.my-4
+        .row 
+            .col-12 
+                +box-head(pageTitle)
+        .row.g-4
+            //- .favorite-songs-list
+            each song in songs 
+                .song-item
+                    .song-image
+                        a(href=`/songs/detail/${song.slug}`)
+                            img(src=song.avatar, alt=song.title)
+                    .song-content
+                        .song-title
+                            a(href=`/songs/detail/${song.slug}`)= song.title
+                        .song-info
+                            .singer
+                                i.fa-solid.fa-microphone-lines
+                                span= song.infoSinger.fullName
+                            .favorite(button-favorite=song._id, class="favorited")
+                                i.fa-solid.fa-heart
+                                span Added to favorites
+                            .time
+                                i.fa-regular.fa-clock
+                                span 20/10/2023
