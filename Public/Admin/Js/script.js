@@ -37,12 +37,12 @@ if (uploadAudio){
 
     uploadAudioInput.addEventListener("change", e => {
         if (e.target.files.length) {
-            uploadAudioPreview.classList.remove('d-none');
-            uploadAudioPreview.classList.add('d-flex');
+            // uploadAudioPreview.classList.remove('d-none');
+            // uploadAudioPreview.classList.add('d-flex');
             const audio = URL.createObjectURL(e.target.files[0]);
             source.src = audio;
             uploadAudioPreview.load();
         }
     });
 }
-// End pplay audio upload
+// End play audio upload
