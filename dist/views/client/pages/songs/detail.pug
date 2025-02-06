@@ -1,0 +1,142 @@
+extends ../../Layouts/default.pug 
+include ../../Mixins/box-head.pug 
+
+block main 
+    .song-detail.py-5
+        .container
+            .card.shadow-lg
+                .card-body.p-4
+                    .song-header.mb-4
+                        h1.song-title.mb-3 #{song.title}
+                        .song-meta.d-flex.flex-wrap.gap-3.mb-4
+                            .meta-item
+                                i.fa-regular.fa-clock.me-2
+                                span.text-muted 20/10/2023
+                            .meta-item.listens
+                                i.fa-solid.fa-headphones.me-2
+                                span #{song.listens} listens
+                            .meta-item
+                                i.fa-solid.fa-microphone-lines.me-2
+                                a(href=`/singer/${infoSinger.slug}`).text-primary #{infoSinger.fullName}
+                            .meta-item
+                                i.fa-solid.fa-music.me-2
+                                a(href=`/songs/${infoTopic.slug}`).text-primary #{infoTopic.title}
+                            .meta-item
+                                button.btn.btn-outline-primary.btn-sm(button-like=song.id class=(liked ? "liked" : ""))
+                                    i(class=(liked ? "fa-solid" : "fa-regular")).fa-thumbs-up.me-2
+                                    span #{song.like} #{liked ? "Liked" : "Like"}
+                            .meta-item
+                                button.btn.btn-outline-danger.btn-sm(button-favorite=song.id class=(favorited ? "favorited" : ""))
+                                    i(class=(favorited ? "fa-solid" : "fa-regular")).fa-heart.me-2
+                                    span #{favorited ? "Added to favorites" : "Add to favorites"}
+
+                    .song-player.mb-4
+                        .row.align-items-center
+                            .col-md-4.mb-3.mb-md-0
+                                .song-avatar.rounded-3.overflow-hidden
+                                    img(src=song.avatar, alt=song.title).img-fluid.w-100
+                            .col-md-8
+                                .audio-player.bg-light.rounded-3.p-3
+                                    //- audio(controls).w-100
+                                    //-     source(src=song.audio)
+                                    div#aplayer(data-song=song data-singer=infoSinger)
+
+                    .song-content
+                        .content-section.mb-4
+                            h3.section-title.mb-3
+                                i.fa-solid.fa-circle-info.me-2
+                                | Description
+                            .section-content.bg-light.rounded-3.p-3
+                                p.mb-0 !{song.description}
+
+                        .content-section
+                            h3.section-title.mb-3
+                                i.fa-solid.fa-music.me-2
+                                | Lyrics
+                            .section-content.bg-light.rounded-3.p-3
+                                pre.lyrics.mb-0.text-pre #{lyrics}
+    //- Other Songs Section
+    .other-songs.py-5
+        .container
+            h2.mb-4 Other Songs
+            .row
+                each song in songs 
+                    .song-item
+                        .song-image
+                            a(href=`/songs/detail/${song.slug}`)
+                                img(src=song.avatar, alt=song.title)
+                        .song-content
+                            .song-title
+                                a(href=`/songs/detail/${song.slug}`)= song.title
+                            .song-info
+                                .singer
+                                    i.fa-solid.fa-microphone-lines
+                                    span= infoSinger.fullName
+                                .favorite(button-favorite=song._id class=(song.favorited ? "favorited" : ""))
+                                    i(class=(song.favorited ? "fa-solid" : "fa-regular")).fa-heart
+                                    span #{song.favorited ? "Added to favorites" : "Add to favorites"}
+                                .time
+                                    i.fa-regular.fa-clock
+                                    span 20/10/2023
+
+
+    //- Other Topics Section
+    .other-topics.py-5
+        .container
+            h2.mb-4 Related Topics
+            .row
+                each topic in topics
+                    .col-12.col-md-6.col-lg-4.col-xl-3.mb-4   
+                        .card.h-100.border-0.shadow-hover.position-relative
+                            .card-img-container.position-relative
+                                .card-img-top.overflow-hidden(style="height: 200px; border-radius: 10px 10px 0 0;")
+                                    img(src=topic.avatar, alt=topic.title, style="width: 100%; height: 100%; object-fit: cover;")
+                                
+                                //- Overlay with buttons (hidden by default)
+                                .topic-overlay.position-absolute.top-0.start-0.w-100.h-100.d-flex.align-items-center.justify-content-center
+                                    .button-group.d-flex.gap-2
+                                        button.btn.btn-light.rounded-circle.p-2(title="Add to favorites")
+                                            i.fas.fa-heart
+                                        button.btn.btn-light.rounded-circle.p-2(title="Play")
+                                            i.fas.fa-play
+                                        .dropdown
+                                            button.btn.btn-light.rounded-circle.p-2(data-bs-toggle="dropdown" title="More options")
+                                                i.fas.fa-ellipsis-h
+                                            ul.dropdown-menu
+                                                li
+                                                    a.dropdown-item(href="#")
+                                                        i.fas.fa-circle-info.me-2
+                                                        | Detail
+                                                li
+                                                    a.dropdown-item(href="#")
+                                                        i.fas.fa-list.me-2
+                                                        | Add to playlist
+                                                li
+                                                    a.dropdown-item.copy-link(data-link=`/songs/${topic.slug}`)
+                                                        i.fas.fa-link.me-2
+                                                        | Copy link
+
+                            .card-body.text-center
+                                h5.card-title.fw-bold #{topic.title}
+                                p.card-text.text-muted #{topic.description}
+                                a(href=`/songs/${topic.slug}`, class="btn btn-primary btn-detail") Detail
+    script.
+
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+
+        // Copy link functionality
+        document.querySelectorAll('.copy-link').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const link = button.getAttribute('data-link');
+                navigator.clipboard.writeText(window.location.origin + link)
+                // Optional: Show a toast or notification that link was copied
+                .then(() => {
+                    showToast('Link copied to clipboard!');
+                })
+            });
+        });
