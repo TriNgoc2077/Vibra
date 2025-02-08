@@ -5,8 +5,15 @@
   "scripts": {
     "start": "nodemon index.ts",
     "build": "tsc && node copy-dir.js",
+    "ts.check": "tsc --project tsconfig.json",
+    "add-build": "git add dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "pre-commit": [
+    "ts.check",
+    "build",
+    "add-build"
+  ],
   "author": "",
   "license": "ISC",
   "description": "",
@@ -45,6 +52,7 @@
     "@types/validator": "^13.12.2",
     "fs-extra": "^11.3.0",
     "nodemon": "^3.1.9",
+    "pre-commit": "^1.0.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
   }
