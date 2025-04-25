@@ -4,10 +4,13 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.ts",
+    "dev": "nodemon index.ts --watch",
     "build": "tsc && node copy-dir.js",
     "ts.check": "tsc --project tsconfig.json",
     "add-build": "git add dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "pre-commit": [
     "ts.check",
@@ -50,6 +53,8 @@
     "@types/node": "^22.12.0",
     "@types/nodemailer": "^6.4.17",
     "@types/validator": "^13.12.2",
+    "eslint": "^9.25.1",
+    "eslint-plugin-pug": "^1.2.5",
     "fs-extra": "^11.3.0",
     "nodemon": "^3.1.9",
     "pre-commit": "^1.0.10",

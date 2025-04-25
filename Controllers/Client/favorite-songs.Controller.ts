@@ -27,12 +27,12 @@ export const index = async (req: Request, res: Response) => {
                 song.infoSinger = infoSinger;
                 return song;
             })
-            
         );
         res.render('Client/Pages/Favorite-songs/index', {
             pageTitle: 'Favorite Song',
-            songs: songs
+            songs: songs,
         });
+        
     } catch(error) {
         console.log((error as Error).message); 
         res.redirect(req.get("Referrer") || "/");

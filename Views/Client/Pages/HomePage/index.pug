@@ -1,0 +1,420 @@
+extends ../../Layouts/default.pug 
+include ../../Mixins/box-head.pug 
+
+block main
+  // Hero Section with Featured Song
+  section.hero-section.position-relative.overflow-hidden.bg-dark.text-white.py-5
+    .container.py-4
+      .row.align-items-center
+        .col-lg-6.mb-4.mb-lg-0.position-relative.z-2
+          h1.display-4.fw-bold.mb-3
+            | Discover Your 
+            span.text-primary Next Favorite Song
+          p.lead.mb-4 Stream the latest hits, discover new artists, and create your perfect playlist.
+          .d-flex.flex-wrap.gap-3
+            a.btn.btn-primary.btn-lg.rounded-pill.shadow(href="#explore")
+              i.fas.fa-play.me-2
+              | Start Listening
+            a.btn.btn-outline-light.btn-lg.rounded-pill(href="#trending")
+              i.fas.fa-fire.me-2
+              | Trending Now
+        .col-lg-6.position-relative.z-2
+          .card.bg-dark.bg-opacity-75.rounded-4.p-3.shadow.featured-card
+            if songs && songs.length > 0
+              - const featuredSong = songs[0]
+              img.rounded-3.w-100.object-fit-cover.featured-img.mb-3(src=featuredSong.avatar alt=featuredSong.title)
+              h3.fw-bold.mb-2= featuredSong.title
+              div #{featuredSong.singerId}
+              p.text-light.mb-3= `${featuredSong.singerId ? featuredSong.singerId.fullName : 'Artist'} • ${topics.find(t => t._id.toString() === featuredSong.topicId._id.toString()).title || 'Genre'}`
+              .d-flex.justify-content-between.align-items-center
+                .d-flex.align-items-center
+                  span.text-light.me-3.small
+                    i.fas.fa-headphones.me-1
+                    | #{featuredSong.listens || 0} listens
+                  span.text-danger.small
+                    i.fas.fa-heart.me-1
+                    | #{featuredSong.like || 0}
+                a(href=`/songs/detail/${featuredSong.slug}` class=".btn.btn-primary.rounded-circle.play-btn")
+                  i.fas.fa-play
+                   
+      
+    // Wave decoration
+    .position-absolute.bottom-0.start-0.w-100.overflow-hidden
+      svg.wave-svg(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320")
+        path.fill-light(fill-opacity="1" d="M0,288L48,272C96,256,192,224,288,197.3C384,171,480,149,576,165.3C672,181,768,235,864,250.7C960,267,1056,245,1152,224C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z")
+
+  // Music Categories Section
+  section#categories.bg-light.py-5
+    .container.py-4
+      +box-head('Music Categories', 'Explore our collection by genre')
+      
+      .row.row-cols-2.row-cols-md-3.row-cols-lg-4.g-4.mt-4
+        if topics && topics.length > 0
+          each topic in topics
+            .col
+              a.card.h-100.shadow-sm.category-card.text-decoration-none(href=`/songs/${topic.slug}`)
+                .position-relative
+                  img.card-img-top.category-img(src=topic.avatar alt=topic.title)
+                  .position-absolute.bottom-0.start-0.end-0.p-3.text-white.category-overlay
+                    h3.fw-bold= topic.title
+                .card-body
+                  p.card-text.text-secondary.small.category-desc= topic.description
+
+  // Trending Songs Section
+  section#trending.py-5
+    .container.py-4
+      +box-head('Trending Songs', 'Most popular tracks right now')
+      
+      .row.row-cols-1.row-cols-md-2.row-cols-lg-3.row-cols-xl-4.g-4.mt-4
+        if songs && songs.length > 0
+          each song in songs.slice(0, 8)
+            .col
+              .card.h-100.song-card.shadow-sm
+                .position-relative
+                  img.card-img-top.song-img(src=song.avatar alt=song.title)
+                  .position-absolute.top-0.end-0.m-2
+                    span.badge.bg-danger.rounded-pill
+                      i.fas.fa-heart.me-1
+                      | #{song.like || 0}
+                  .play-overlay.position-absolute.top-0.start-0.w-100.h-100.d-flex.align-items-center.justify-content-center
+                    button.btn.btn-primary.rounded-circle.play-btn
+                      i.fas.fa-play
+                .card-body
+                  h5.card-title.fw-bold.text-truncate= song.title
+                  p.card-text.text-secondary.small= topics.find(t => t._id.toString() === song.topicId._id.toString()).title || 'Genre'
+                  .d-flex.justify-content-between.align-items-center.mt-3
+                    span.text-secondary.small
+                      i.fas.fa-headphones.me-1
+                      | #{song.listens || 0} listens
+                    a.btn.btn-sm.btn-outline-primary(href=`/songs/detail/${song.slug}`) Play Now
+
+  // New Releases Section with Horizontal Scrolling
+  section.py-5.bg-light
+    .container.py-4
+      .d-flex.justify-content-between.align-items-center.mb-4
+        +box-head('New Releases', 'Fresh tracks added recently')
+        .controls
+          button#scroll-left.btn.btn-light.me-2.rounded-circle.control-btn
+            i.fas.fa-chevron-left
+          button#scroll-right.btn.btn-light.rounded-circle.control-btn
+            i.fas.fa-chevron-right
+      
+      .position-relative.overflow-hidden
+        .tracks-container.d-flex.gap-3.overflow-auto.pb-3
+          if songs && songs.length > 0
+            each song in songs
+              .flex-shrink-0.new-release-card
+                .card.shadow-sm.h-100
+                  .position-relative
+                    img.card-img-top.new-release-img(src=song.avatar alt=song.title)
+                    .position-absolute.top-0.end-0.m-2
+                      span.badge.bg-primary.rounded-pill NEW
+                    .play-overlay.position-absolute.top-0.start-0.w-100.h-100.d-flex.align-items-center.justify-content-center
+                      button.btn.btn-primary.rounded-circle.play-btn
+                        i.fas.fa-play
+                  .card-body
+                    h5.card-title.fw-bold.text-truncate= song.title
+                    p.card-text.text-secondary.small= topics.find(t => t._id.toString() === song.topicId._id.toString()).title || 'Genre'
+                    .d-flex.align-items-center.small.text-secondary.mt-2
+                      i.fas.fa-calendar-alt.me-1
+                      | Added recently
+
+  // Newsletter Section
+  section.py-5.bg-primary.text-white
+    .container.py-4
+      .row.align-items-center
+        .col-lg-6.mb-4.mb-lg-0
+          h2.display-6.fw-bold.mb-2 Never Miss a Beat
+          p.mb-4 Subscribe to our newsletter for the latest music updates, exclusive content, and personalized recommendations.
+        .col-lg-6
+          form.row.g-3
+            .col-sm-8
+              input.form-control.form-control-lg.bg-light(type="email" placeholder="Your email address" required)
+            .col-sm-4
+              button.btn.btn-light.btn-lg.w-100.text-primary.fw-bold(type="submit") Subscribe
+
+  // Mini Audio Player (Fixed at Bottom)
+  .fixed-bottom.bg-white.border-top.shadow.mini-player
+    .container
+      .row.align-items-center.py-3
+        .col-md-4.d-flex.align-items-center
+          img.rounded.me-3.current-song-img(src="https://backend.daca.vn/assets/images/cat-doi-noi-sau.jpg" alt="Currently playing" width="48" height="48")
+          .d-flex.flex-column
+            h6.mb-0.fw-bold.text-truncate#current-song-title Currently Playing: Cắt Đôi Nỗi Sầu
+            p.text-secondary.small.mb-0#current-song-artist Artist Name
+        
+        .col-md-4.d-flex.justify-content-center.align-items-center.gap-3.my-3.my-md-0
+          button.btn.btn-light.rounded-circle.control-btn
+            i.fas.fa-step-backward
+          button.btn.btn-primary.rounded-circle.control-btn#play-pause-btn
+            i.fas.fa-play
+          button.btn.btn-light.rounded-circle.control-btn
+            i.fas.fa-step-forward
+          
+        .col-md-4.d-flex.align-items-center.justify-content-end.gap-3
+          .d-flex.align-items-center.gap-2
+            button.btn.btn-sm.text-secondary.p-0
+              i.fas.fa-volume-up
+            .progress.volume-progress
+              .progress-bar.bg-primary(role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100")
+          button.btn.btn-sm.text-secondary.p-0
+            i.fas.fa-heart
+          span.text-secondary.small 02:45 / 03:30
+
+  style.
+    .hero-section {
+      background: linear-gradient(135deg, #343a40 0%, #212529 100%);
+      min-height: 500px;
+    }
+    
+    .featured-card {
+      transition: transform 0.3s ease;
+    }
+    
+    .featured-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .featured-img {
+      height: 250px;
+    }
+    
+    .category-img {
+      height: 140px;
+      object-fit: cover;
+    }
+    
+    .category-overlay {
+      background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+    }
+    
+    .song-img {
+      height: 180px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    
+    .song-card:hover .song-img {
+      transform: scale(1.05);
+    }
+    
+    .play-overlay {
+      background-color: rgba(0,0,0,0.3);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .song-card:hover .play-overlay,
+    .new-release-card:hover .play-overlay {
+      opacity: 1;
+    }
+    
+    .play-btn {
+      width: 48px;
+      height: 48px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+    }
+    
+    .play-btn:hover {
+      transform: scale(1.1);
+    }
+    
+    .tracks-container {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    
+    .tracks-container::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .new-release-card {
+      width: 220px;
+    }
+    
+    .new-release-img {
+      height: 150px;
+      object-fit: cover;
+    }
+    
+    .volume-progress {
+      width: 80px;
+      height: 5px;
+    }
+    
+    .control-btn {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .mini-player {
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+    
+    .mini-player.show {
+      transform: translateY(0);
+    }
+    
+    .category-card:hover {
+      transform: translateY(-5px);
+      transition: transform 0.3s ease;
+    }
+    
+    .category-desc {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .current-song-img {
+      object-fit: cover;
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.8s forwards;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .wave-svg {
+      display: block;
+      width: 100%;
+      height: 60px;
+    }
+    
+    .rounded-4 {
+      border-radius: 0.75rem;
+    }
+    
+    .rounded-3 {
+      border-radius: 0.5rem;
+    }
+    
+    .bg-opacity-75 {
+      --bs-bg-opacity: 0.75;
+    }
+    
+    .z-2 {
+      z-index: 2;
+    }
+
+  script.
+    // Show mini player on scroll
+    window.addEventListener('scroll', function() {
+      const scrollPos = window.scrollY;
+      const player = document.querySelector('.mini-player');
+      
+      if (scrollPos > 300) {
+        player.classList.add('show');
+      } else {
+        player.classList.remove('show');
+      }
+    });
+    
+    // Horizontal scrolling for New Releases
+    document.addEventListener('DOMContentLoaded', function() {
+      const container = document.querySelector('.tracks-container');
+      const leftBtn = document.getElementById('scroll-left');
+      const rightBtn = document.getElementById('scroll-right');
+      
+      if (leftBtn && rightBtn && container) {
+        const scrollAmount = 250;
+        
+        leftBtn.addEventListener('click', function() {
+          container.scrollBy({
+            left: -scrollAmount,
+            behavior: 'smooth'
+          });
+        });
+        
+        rightBtn.addEventListener('click', function() {
+          container.scrollBy({
+            left: scrollAmount,
+            behavior: 'smooth'
+          });
+        });
+      }
+      
+      // Animation for song cards on scroll
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('fade-in');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      document.querySelectorAll('.song-card, .category-card').forEach(card => {
+        observer.observe(card);
+        card.style.opacity = '0';
+      });
+    });
+    
+    // Simulate play functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const playButtons = document.querySelectorAll('.play-btn');
+      const miniPlayer = document.querySelector('.mini-player');
+      const playPauseBtn = document.getElementById('play-pause-btn');
+      const currentSongTitle = document.getElementById('current-song-title');
+      const currentSongArtist = document.getElementById('current-song-artist');
+      
+      playButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          // Find the song card parent
+          const songCard = this.closest('.card');
+          if (songCard) {
+            const songTitle = songCard.querySelector('.card-title').textContent;
+            const songGenre = songCard.querySelector('.card-text').textContent;
+            const songImage = songCard.querySelector('img').src;
+            
+            // Update mini player
+            currentSongTitle.textContent = 'Currently Playing: ' + songTitle;
+            currentSongArtist.textContent = songGenre;
+            document.querySelector('.current-song-img').src = songImage;
+            
+            // Show mini player
+            miniPlayer.classList.add('show');
+            
+            // Change play button to pause
+            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+          }
+        });
+      });
+      
+      // Toggle play/pause in mini player
+      if (playPauseBtn) {
+        playPauseBtn.addEventListener('click', function() {
+          const icon = this.querySelector('i');
+          if (icon.classList.contains('fa-play')) {
+            icon.classList.remove('fa-play');
+            icon.classList.add('fa-pause');
+          } else {
+            icon.classList.remove('fa-pause');
+            icon.classList.add('fa-play');
+          }
+        });
+      }
+    });

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Mongoose } from 'mongoose';
 import slug from 'mongoose-slug-updater';
 mongoose.plugin(slug);
 const songSchema = new mongoose.Schema(
@@ -6,8 +6,14 @@ const songSchema = new mongoose.Schema(
         title: String,
         avatar: String,
         description: String,
-        singerId: String,
-        topicId: String,
+        singerId: {
+            type: String,
+            ref: 'Singer'
+        },
+        topicId: {
+            type: String,
+            ref: 'Topic'
+        },
         like: {
             type: Number,
             default: 0
