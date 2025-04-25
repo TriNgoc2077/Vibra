@@ -1,1 +1,1 @@
-Deployed at: https://vibra-ctn.vercel.app
+Deployed at: https://vibra-ctn.vercel.app/topics
